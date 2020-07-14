@@ -4,6 +4,7 @@ const path = require("path");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const graphqlHTTP = require("express-graphql");
+const Auth = require("./middle/auth");
 
 require("dotenv").config();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
+app.use(Auth);
 
 app.use(
   "/graphql",
