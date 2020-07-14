@@ -11,16 +11,16 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  categories: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Category",
-    },
-  ],
-  transactions: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Transaction",
-    },
-  ],
+  // categories: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "Category",
+  //   },
+  // ],
+  // transactions: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "Transaction",
+  //   },
+  // ],
 });
