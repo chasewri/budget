@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const graphqlHTTP = require("express-graphql");
+
 require("dotenv").config();
 
 const app = express();
@@ -13,6 +15,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: graphQlSchema,
+    rootValue: graphQlResolvers,
+    graphiql: true,
+  })
+);
 
 const port = process.env.PORT || 3000;
 
