@@ -8,16 +8,16 @@ const Auth = require("./middle/auth");
 
 require("dotenv").config();
 
-
-const graphQlSchema = require('./api/schema/index')
-const graphQlResolvers = require('./api/resolvers/categories')
+const graphQlSchema = require("./api/schema/index");
+const graphQlResolvers = require("./api/resolvers/categories");
 
 const app = express();
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public")));
+// app.use(favicon(path.join(__dirname, "build", "favicon.ico")));
+app.use(express.static(path.join(__dirname, "frontend/build")));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -40,6 +40,10 @@ app.use(
     graphiql: true,
   })
 );
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend/build", "index.html"));
+});
 
 const port = process.env.PORT || 3000;
 
