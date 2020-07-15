@@ -21,7 +21,7 @@ function IndexPage() {
             <span className="letter2">
               <i>worth</i>
             </span>
-            &nbsp;&nbsp;using
+            &nbsp;&nbsp;using&nbsp;<i class="fas fa-exclamation"></i>
           </p>
           <hr className="hr1" />
           <hr width="75%" className="hr2" />
