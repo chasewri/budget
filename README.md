@@ -3,7 +3,7 @@
 ## A budgeting app *worth* actually using
 
 ## Index Page
-![index page](https://i.imgur.com/OgLC7Wj.png)
+![index page](https://i.imgur.com/eA6fXCO.png)
 
 ## Trello
 [Trello board for this project](https://trello.com/b/xrsCNnSH/budget)
