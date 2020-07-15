@@ -1,0 +1,35 @@
+// color palette
+$blue: #007bff;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #d9534f;
+$orange: #fd7e14;
+$yellow: #f0ad4e;
+$green: #4BBF73;
+$teal: #20c997;
+$cyan: #1F9BCF;
+$white: #fff;
+$gray: #919aa1;
+$gray-dark: #343a40;
+$primary: #1a1a1a;
+$secondary: #fff;
+$success: #4BBF73;
+$info: #1F9BCF;
+$warning: #f0ad4e;
+$danger: #d9534f;
+$light: #2E3F5d;
+$dark: #343a40;
+
+.bg-light {
+    background-color: $light;
+    color: white;
+}
+
+.index {
+    text-align: center;
+
+    h1 {
+        margin-top: 2vh;
+    }
+}
