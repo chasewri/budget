@@ -48,11 +48,14 @@ module.exports = buildSchema(`
 
     type RootQuery {
         categories: [Category!]!
+        transactions: [Transaction!]!
+        login(email: String!, password: String!): AuthData!
     }
 
     type RootMutation {
         createUser(userInput: UserInput): User
         createCategory(categoryInput: CategoryInput): Category
+        createTransaction(transactionInput: TransactionInput): Transaction!
     }
 
     schema {
