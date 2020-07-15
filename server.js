@@ -3,10 +3,14 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const logger = require("morgan");
 const mongoose = require("mongoose");
-const graphqlHTTP = require("express-graphql");
+const { graphqlHTTP } = require("express-graphql");
 const Auth = require("./middle/auth");
 
 require("dotenv").config();
+
+
+const graphQlSchema = require('./api/schema/index')
+const graphQlResolvers = require('./api/resolvers/categories')
 
 const app = express();
 
