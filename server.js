@@ -4,7 +4,7 @@ const path = require("path");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const { graphqlHTTP } = require("express-graphql");
-const Auth = require("./middle/auth");
+const Auth = require("./middle/authMiddleware");
 
 require("dotenv").config();
 
