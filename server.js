@@ -9,7 +9,7 @@ const Auth = require("./middle/authMiddleware");
 require("dotenv").config();
 
 const graphQlSchema = require("./api/schema/index");
-const graphQlResolvers = require("./api/resolvers/categories");
+const graphQlResolvers = require("./api/resolvers/index");
 
 const app = express();
 
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
     return res.sendStatus(200);
   }
-  next();
+  next()
 });
 
 app.use(Auth);

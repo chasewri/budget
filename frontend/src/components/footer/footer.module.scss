@@ -1,0 +1,20 @@
+$background-blue: #2E3F5d;
+$pink-first: #E36091;
+$pink-second: #EB9DB8;
+$pink-third: #F3CCD9;
+
+
+
+
+.footer {
+    footer {
+        text-align: center;
+        padding-top: 5rem;
+        background-color: white;
+        color: $background-blue;
+        position: relative;
+        max-height: 10vh;
+        left: 0;
+        bottom: 0;
+    }
+}

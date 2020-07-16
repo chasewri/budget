@@ -14,9 +14,9 @@ module.exports = {
     }
   },
   createCategory: async (args, req) => {
-    if (!req.Auth) {
-      throw new Error("Visitor is not authenticated!");
-    }
+    // if (!req.Auth) {
+    //   throw new Error("Visitor is not authenticated!");
+    // }
     const category = new Category({
       name: args.categoryInput.name,
       user: req.userId,

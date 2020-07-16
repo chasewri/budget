@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../components/nav";
-import Footer from "../components/footer";
+import Footer from "../components/footer/footer";
+
+import AuthContext from '../context/auth-context'
 
 function IndexPage() {
   const [user, setUser] = useState({});
+  const { token } = useContext(AuthContext)
 
   return (
+    <>
     <div className="index">
       <Nav />
       <div className="jumbotron jumbotron-fluid">
-        <div className="container">
+        <div className="container-fluid">
           <h1 className="display-6">
             <span className="letter1">F </span>
             <span className="letter2">D </span>
@@ -26,25 +30,26 @@ function IndexPage() {
           <hr className="hr1" />
           <hr width="75%" className="hr2" />
           <hr width="50%" className="hr3" />
-          {user.name ? (
-            <Link to="#" className="btn btn-lg button">
+          {token ? (
+            <Link to="/budget" className="btn btn-lg button">
               View Your Budget
             </Link>
           ) : (
-            <Link to="#" className="btn btn-lg button">
-              Sign Up Now
+            <Link to="/login" className="btn btn-lg button">
+              Log In Now
             </Link>
           )}
         </div>
       </div>
       <div className="local-wave1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
           <path
             fill="#F7F7F9"
             fillOpacity="1"
             d="M0,96L48,106.7C96,117,192,139,288,122.7C384,107,480,53,576,74.7C672,96,768,192,864,213.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
           ></path>
-        </svg>
+        </svg> */}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#F7F7F9" fillOpacity="1" d="M0,96L48,85.3C96,75,192,53,288,80C384,107,480,181,576,202.7C672,224,768,192,864,165.3C960,139,1056,117,1152,106.7C1248,96,1344,96,1392,96L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
         {/* here */}
         <img width="100%" src="https://i.imgur.com/ZXWWwvD.png" alt="" />
         <p className="section-text">
@@ -53,18 +58,18 @@ function IndexPage() {
           similique soluta vel, praesentium labore, esse in. Dolore, molestias
           porro!
         </p>
-
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-          <path
-            fill="#FFF"
-            fillOpacity="1"
-            d="M0,96L48,101.3C96,107,192,117,288,154.7C384,192,480,256,576,277.3C672,299,768,277,864,245.3C960,213,1056,171,1152,154.7C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-          ></path>
-        </svg>
+        <path
+          fill="#FFF"
+          fillOpacity="1"
+          d="M0,96L48,101.3C96,107,192,117,288,154.7C384,192,480,256,576,277.3C672,299,768,277,864,245.3C960,213,1056,171,1152,154.7C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+        ></path>
+      </svg>
         {/* <svg className="second-white-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#FFF" fill-opacity="1" d="M0,256L48,240C96,224,192,192,288,170.7C384,149,480,139,576,165.3C672,192,768,256,864,250.7C960,245,1056,171,1152,144C1248,117,1344,139,1392,149.3L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg> */}
       </div>
-      <Footer />
     </div>
+    <Footer />
+    </>
   );
 }
 
