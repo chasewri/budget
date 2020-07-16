@@ -48,7 +48,7 @@ module.exports = buildSchema(`
 
     type RootQuery {
         categories(userId: String!): [Category!]!
-        transactions: [Transaction!]!
+        transactions(userId: String!): [Transaction!]!
         login(email: String!, password: String!): AuthData!
     }
 
