@@ -6,7 +6,7 @@ import styles from "./signUp.module.scss";
 import AuthContext from "../../context/auth-context";
 
 function SignUp() {
-  const { login, logout } = useContext(AuthContext);
+  const { login, logout, token, userId } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -66,6 +66,12 @@ function SignUp() {
       .then((resData) => {
         console.log(resData);
         login(resData.data.login);
+        if (currentPath === '/signup') {
+          history.push('/login')
+          setPassword('')
+          setEmail('')
+          return
+        }
         history.push("/budget");
       })
       .catch((err) => {
