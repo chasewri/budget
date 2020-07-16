@@ -16,18 +16,17 @@ module.exports = buildSchema(`
         _id: ID!
         name: String!
         description: String
-        amount: Int!
+        amount: Float!
         date: String!
-        category: String!
+        category: Category!
         user: User!
     }
 
     input TransactionInput {
         name: String!
         description: String
-        amount: Int!
+        amount: Float!
         date: String!
-        category: String!
     }
 
     type Category {
@@ -44,11 +43,12 @@ module.exports = buildSchema(`
 
     input CategoryInput {
         name: String!
+        id: String!
     }
 
     type RootQuery {
-        categories: [Category!]!
-        transactions: [Transaction!]!
+        categories(userId: String!): [Category!]!
+        transactions(userId: String!): [Transaction!]!
         login(email: String!, password: String!): AuthData!
     }
 
