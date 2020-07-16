@@ -5,7 +5,7 @@ module.exports = {
   transactions: async (args, req) => {
     try {
       const transactions = await Transaction.find({
-        user: args.id,
+        user: args.userId,
         // user: args.user
       }).populate("user").populate('category').sort('date');
       return transactions.map((transaction) => {
@@ -25,7 +25,7 @@ module.exports = {
       name: args.transactionInput.name,
       description: args.transactionInput.description,
       amount: +(args.transactionInput.amount * 100),
-      date: new Date(args.transactionInput.date).toISOString(),
+      date: new Date(args.transactionInput.date).toLocaleString(),
     //   category: "5f106f94ed21be267e921cd1",
       category: args.transactionInput.category,
     //   user: "5f0ff107a407664fee80ae05",
