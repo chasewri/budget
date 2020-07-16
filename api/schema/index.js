@@ -27,6 +27,8 @@ module.exports = buildSchema(`
         description: String
         amount: Float!
         date: String!
+        category: String!
+        user: String!
     }
 
     type Category {
