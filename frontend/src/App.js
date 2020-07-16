@@ -15,15 +15,19 @@ function App() {
   const [userAuth, setUserAuth] = useState({
     token: null,
     userId: null,
+    tokenExpiration: null
   });
+
 
   const history = useHistory();
 
   const login = (token, userId, tokenExpiration) => {
     setUserAuth({
-      token: token,
-      userId: userId,
+      token,
+      userId,
+      tokenExpiration
     });
+    // localStorage.setItem('token', token)
   };
 
   const logout = () => {
@@ -31,6 +35,7 @@ function App() {
       token: null,
       userId: null,
     });
+    // localStorage.removeItem('token')
   };
 
   return (
@@ -39,6 +44,7 @@ function App() {
         value={{
           token: userAuth.token,
           userId: userAuth.userId,
+          tokenExpiration: userAuth.tokenExpiration,
           login,
           logout,
         }}
@@ -48,6 +54,7 @@ function App() {
           <Route path="/signup" component={SignUp} exact />
           <Route path="/login" component={SignUp} exact />
           <Route path="/budget" exact>
+            {/* <Budget /> */}
             {!userAuth.token ? <Redirect to="/login" /> : <Budget />}
           </Route>
           <Route path="/:random">

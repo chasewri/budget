@@ -26,7 +26,7 @@ module.exports = {
     // }
     const category = new Category({
       name: args.categoryInput.name,
-      user: arg.categoryInput.id,
+      user: args.categoryInput.id,
       // user: args.categoryInput.user
     });
     let createdCategory;
