@@ -3,6 +3,10 @@ import d3 from "d3";
 import Nav from "../../components/nav";
 import Footer from "../../components/footer/footer";
 
+import windowDimensions from "../../utils/windowDimensions";
+
+import { Donut, withResponsiveness, Sparkline, Line } from "britecharts-react";
+
 import submitTransactions from "../../utils/submitTransactions";
 import CategoryForm from "../../components/categoryForm/categoryForm";
 import TransactionForm from "../../components/transactionForm/transactionForm";
@@ -13,9 +17,28 @@ import AuthContext from "../../context/auth-context";
 import style from "./budgetPage.module.scss";
 
 function Budget() {
+  const ResponsiveDonut = withResponsiveness(Donut);
+  const ResponsiveSparkline = withResponsiveness(Sparkline);
+  const ResponsiveLine = withResponsiveness(Line);
+
   const [cats, setCats] = useState([]);
   const [name, setName] = useState("");
   const { token } = useContext(AuthContext);
+
+  const { height, width } = windowDimensions();
+
+  const currentBalance = () => {
+    return fetchedTrans.map((tran) => tran.amount).reduce((a, b) => a + b, 0);
+  };
+  const lookAtData = () => {
+     console.log(fetchedTrans)
+  }
+  const dataForSparkle = () => {
+    return fetchedTrans.map((tran) => {
+      return {value: tran.amount, date: tran.date.split(',')[0] }
+    });
+  };
+
 
   // all the transaction state/setStates
   const [transName, setTransName] = useState("");
@@ -74,22 +97,39 @@ function Budget() {
               <h3
                 className="balance"
                 style={{
-                  color:
-                    fetchedTrans &&
-                    fetchedTrans
-                      .map((tran) => tran.amount)
-                      .reduce((a, b) => a + b, 0) > 0
-                      ? "black"
-                      : "red",
+                  color: fetchedTrans && currentBalance() > 0 ? "black" : "red",
                 }}
               >
-                {fetchedTrans &&
-                  fetchedTrans
-                    .map((tran) => tran.amount)
-                    .reduce((a, b) => a + b, 0)}
+                {fetchedTrans && currentBalance()}
               </h3>
             </div>
-            <div id="doc" className="col-8"></div>
+            <div id="doc" className="col-8">
+              <h3>
+                {" "}
+                width: {width} ~ height: {height}
+              </h3>
+
+            
+              {/* <ResponsiveDonut 
+                      data={[]}
+                      shouldShowLoadingState={true}
+                    
+                    />  */}
+
+
+              {fetchedTrans && console.log([dataForSparkle()], [dataForSparkle()][0].length)}
+              {fetchedTrans && lookAtData()}
+              { ([dataForSparkle()][0].length) ?
+                <ResponsiveSparkline
+                  data={[dataForSparkle()][0]}
+                  isAnimated={true}
+                  duration={2000}
+                  height={height*4/5}
+                />
+                :
+                <ResponsiveLine data={null} shouldShowLoadingState={true} />
+              }
+            </div>
           </div>
         </div>
       </div>
