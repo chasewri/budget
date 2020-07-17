@@ -7,13 +7,16 @@ module.exports = {
       const transactions = await Transaction.find({
         user: args.userId,
         // user: args.user
-      }).populate("user").populate('category').sort('date');
+      })
+        .populate("user")
+        .populate("category")
+        .sort("date");
       return transactions.map((transaction) => {
         return {
           ...transaction._doc,
           _id: transaction.id,
           amount: transaction._doc.amount / 100,
-          date: transaction._doc.date.toLocaleString()
+          date: transaction._doc.date.toLocaleString(),
         };
       });
     } catch (err) {
@@ -26,10 +29,10 @@ module.exports = {
       description: args.transactionInput.description,
       amount: +(args.transactionInput.amount * 100),
       date: new Date(args.transactionInput.date).toLocaleString(),
-    //   category: "5f106f94ed21be267e921cd1",
+      //   category: "5f106f94ed21be267e921cd1",
       category: args.transactionInput.category,
-    //   user: "5f0ff107a407664fee80ae05",
-      user: args.transactionInput.user
+      //   user: "5f0ff107a407664fee80ae05",
+      user: args.transactionInput.user,
     });
     let createdTransaction;
     try {

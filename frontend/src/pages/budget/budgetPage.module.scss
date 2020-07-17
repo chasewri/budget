@@ -1,8 +1,49 @@
-.budgetPage {
-    background-color: plum;
-    height: 100vh;
+$background-blue: #2E3F5d;
+$pink-first: #E36091;
+$pink-second: #EB9DB8;
+$pink-third: #F3CCD9;
+
+
+.main {
     text-align: center;
-    h1{
+    min-height: 50vh;
+    background: rgb(235, 157, 184);
+    background: linear-gradient(0deg, rgba(235, 157, 184, 1) 12%, rgba(45, 59, 93, 1) 43%);
+
+    color: white;
+ 
+    h1 {
+        color: white;
         padding-top: 5rem;
     }
+    div {
+        margin-top: 5 vh;
+    }
+    form {
+        padding-top: 5rem;
+    }
+    label {
+        margin-top: 3vh;
+        font-size: 1.7rem;
+    }
+    input {
+        font-size: 1.5rem;
+    }
+    button {
+        margin-top: 3vh;
+        background-color: $pink-first;
+        color: white;
+        border-radius: .9rem;
+        padding: 1rem 3rem;
+        &:hover {
+            background-color: white;
+        }
+    }
+
 }
+
+
+.formActions {
+    align-items: center;
+}
+

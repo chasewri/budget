@@ -1,9 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import Nav from "../../components/nav";
+import Footer from '../../components/footer/footer'
 
+import submitTransactions from "../../utils/submitTransactions";
+import CategoryForm from "../../components/categoryForm/categoryForm";
+import TransactionForm from "../../components/transactionForm/transactionForm";
 import catCatcher from "../../utils/catCatcher";
 import makeCats from "../../utils/makeCats";
-
+import transactionCatcher from "../../utils/transactionCatcher";
 import AuthContext from "../../context/auth-context";
 import style from "./budgetPage.module.scss";
 
@@ -24,88 +28,26 @@ function Budget() {
   const [fetchedTrans, setFetchedTrans] = useState([]);
 
   useEffect(() => {
-    const queryBody = {
-      query: `
-        query {
-          transactions(userId: "${token.userId}") {
-            _id
-            name
-            description
-            amount
-            date
-
-          }
-        }
-      `,
-    };
-    fetch("http://localhost:3001/api", {
-      method: "POST",
-      body: JSON.stringify(queryBody),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((resData) => {
-        console.log(resData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    transactionCatcher(token, setFetchedTrans);
   }, []);
 
-  // --------------------------------
   useEffect(() => {
     catCatcher(token, setCats);
-  }, []);
+  }, [token]);
 
   const transSubmit = (e) => {
     e.preventDefault();
-    console.log(transName, description, amount, date, selectCat);
-
-    if (transName.trim().length === 0) {
-      return;
-    }
-
-    const queryBody = {
-      query: `
-        mutation {
-          createTransaction(transactionInput: {
-            name: "${transName}",
-            description: "${description}",
-            amount: ${amount},
-            date: "${date}",
-            category: "${selectCat}",
-            user: "${token.userId}"
-          }) {
-            _id
-            name
-            description
-            amount
-       
-          }
-        }
-      `,
-    };
-    fetch("http://localhost:3001/api", {
-      method: "POST",
-      body: JSON.stringify(queryBody),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        return res.json();
-      })
-      .then((resData) => {
-        console.log(resData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // console.log(transName, description, amount, date, selectCat);
+    submitTransactions(
+      transName,
+      description,
+      amount,
+      date,
+      selectCat,
+      token,
+      transactionCatcher,
+      setFetchedTrans
+    );
   };
 
   const handleSubmit = (e) => {
@@ -113,31 +55,20 @@ function Budget() {
     makeCats(catCatcher, token, setCats, name, setName);
   };
   return (
-    <div className={style.budgetPage}>
+    <>
       <Nav />
-      <h1>Here is the budget placeholder page</h1>
-
-      <form onSubmit={handleSubmit}>
-        <h3>Create a category</h3>
-        <div className="form-group">
-          <label htmlFor="name">Category Name</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter category name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+      <div className={style.main}>
+        <div className="container">
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            setName={setName}
+            name={name}
+            title="Add Catagories Here"
           />
-        </div>
 
-        <button type="submit" className="btn btn-lg btn-light">
-          Create Cateogry
-        </button>
-      </form>
-
-      <h3>Categories are here???</h3>
+          {/* <h3>Categories are here???</h3>
       <ul>
-        {/* placeholder lets have some nice loading in the future */}
+      
         {!cats && <li> Loading Categories! </li>}
         {cats && cats.map((cat) => <li key={cat._id}>{cat.name}</li>)}
       </ul>
@@ -147,67 +78,53 @@ function Budget() {
           <option value="">Categories</option>
           {cats && cats.map((cat) => <option key={cat._id}>{cat.name}</option>)}
         </select>
-      </form>
+      </form>  */}
 
-      <hr />
-      <hr />
+          <hr />
+          <hr />
 
-      <h3>Here we can add some transactions</h3>
-
-      <form onSubmit={transSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Transaction Name</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Transaction Name"
-            value={transName}
-            onChange={(e) => setTransName(e.target.value)}
+          <TransactionForm
+            title="Add Transactions"
+            transSubmit={transSubmit}
+            transName={transName}
+            setTransName={setTransName}
+            description={description}
+            setDescription={setDescription}
+            amount={amount}
+            setAmount={setAmount}
+            date={date}
+            setDate={setDate}
+            selectCat={selectCat}
+            setSelectCat={setSelectCat}
+            cats={cats}
           />
 
-          <label htmlFor="description">Description (optional)</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+          <hr />
+          <hr />
 
-          <label htmlFor="amount">Amount</label>
-          <input
-            className="form-control"
-            placeholder="Amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            type="number"
-          />
-
-          <label htmlFor="name">Date</label>
-          <input
-            className="form-control"
-            placeholder="Date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            type="date"
-          />
-
-          <select
-            value={selectCat}
-            onChange={(e) => setSelectCat(e.target.value)}
+          <h3>Transaction data</h3>
+          <h3>{/* You're current balance: {balance} */}</h3>
+          <p> {!fetchedTrans && "loading.."} </p>
+          <h3
+            style={{
+              color:
+                fetchedTrans &&
+                fetchedTrans
+                  .map((tran) => tran.amount)
+                  .reduce((a, b) => a + b, 0) > 0
+                  ? "black"
+                  : "red",
+            }}
           >
-            <option value="start">Select Category</option>
-            {cats &&
-              cats.map((cat) => (
-                <option key={cat._id} value={cat._id}>
-                  {cat.name}
-                </option>
-              ))}
-          </select>
+            {fetchedTrans &&
+              fetchedTrans
+                .map((tran) => tran.amount)
+                .reduce((a, b) => a + b, 0)}
+          </h3>
         </div>
-        <button type="submit">Submit Transaction</button>
-      </form>
-    </div>
+        <Footer />
+      </div>
+    </>
   );
 }
 
