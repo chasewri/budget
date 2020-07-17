@@ -6,7 +6,7 @@ $pink-third: #F3CCD9;
 
 .main {
     text-align: center;
-    min-height: 50vh;
+    min-height: 100vh;
     background: rgb(235, 157, 184);
     background: linear-gradient(0deg, rgba(235, 157, 184, 1) 12%, rgba(45, 59, 93, 1) 43%);
 
@@ -38,6 +38,9 @@ $pink-third: #F3CCD9;
         &:hover {
             background-color: white;
         }
+    }
+    .balance {
+        margin-top: 10rem;
     }
 
 }

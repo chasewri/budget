@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
+import d3 from "d3";
 import Nav from "../../components/nav";
-import Footer from '../../components/footer/footer'
+import Footer from "../../components/footer/footer";
 
 import submitTransactions from "../../utils/submitTransactions";
 import CategoryForm from "../../components/categoryForm/categoryForm";
@@ -54,75 +55,43 @@ function Budget() {
     e.preventDefault();
     makeCats(catCatcher, token, setCats, name, setName);
   };
+  // ------------d3----------------
+  // const d3Data = [10, 15, 20, 25, 50];
+  // const doc = d3.select("#doc");
+  // const svg = doc.append("svg").attr("width", 800).attr("height", 400);
+  // const colors = d3.scale.category10();
+  // const circles = svg.selectAll("circle").data(data).enter().append("circle").attr('cx', function(d, i) )
+
+  // ------------------------------------------
   return (
     <>
       <Nav />
       <div className={style.main}>
         <div className="container">
-          <CategoryForm
-            handleSubmit={handleSubmit}
-            setName={setName}
-            name={name}
-            title="Add Catagories Here"
-          />
-
-          {/* <h3>Categories are here???</h3>
-      <ul>
-      
-        {!cats && <li> Loading Categories! </li>}
-        {cats && cats.map((cat) => <li key={cat._id}>{cat.name}</li>)}
-      </ul>
-
-      <form>
-        <select name="" id="">
-          <option value="">Categories</option>
-          {cats && cats.map((cat) => <option key={cat._id}>{cat.name}</option>)}
-        </select>
-      </form>  */}
-
-          <hr />
-          <hr />
-
-          <TransactionForm
-            title="Add Transactions"
-            transSubmit={transSubmit}
-            transName={transName}
-            setTransName={setTransName}
-            description={description}
-            setDescription={setDescription}
-            amount={amount}
-            setAmount={setAmount}
-            date={date}
-            setDate={setDate}
-            selectCat={selectCat}
-            setSelectCat={setSelectCat}
-            cats={cats}
-          />
-
-          <hr />
-          <hr />
-
-          <h3>Transaction data</h3>
-          <h3>{/* You're current balance: {balance} */}</h3>
-          <p> {!fetchedTrans && "loading.."} </p>
-          <h3
-            style={{
-              color:
-                fetchedTrans &&
-                fetchedTrans
-                  .map((tran) => tran.amount)
-                  .reduce((a, b) => a + b, 0) > 0
-                  ? "black"
-                  : "red",
-            }}
-          >
-            {fetchedTrans &&
-              fetchedTrans
-                .map((tran) => tran.amount)
-                .reduce((a, b) => a + b, 0)}
-          </h3>
+          <div className="row">
+            <div className="col-4">
+              <p> {!fetchedTrans && "loading.."} </p>
+              <h3
+                className="balance"
+                style={{
+                  color:
+                    fetchedTrans &&
+                    fetchedTrans
+                      .map((tran) => tran.amount)
+                      .reduce((a, b) => a + b, 0) > 0
+                      ? "black"
+                      : "red",
+                }}
+              >
+                {fetchedTrans &&
+                  fetchedTrans
+                    .map((tran) => tran.amount)
+                    .reduce((a, b) => a + b, 0)}
+              </h3>
+            </div>
+            <div id="doc" className="col-8"></div>
+          </div>
         </div>
-        <Footer />
       </div>
     </>
   );
