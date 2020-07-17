@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { TimelineMax, Power1 } from "gsap/all";
+import sp from "simple-parallax-js";
 import Nav from "../components/nav";
 import Footer from "../components/footer/footer";
 
@@ -10,24 +11,29 @@ function IndexPage() {
   const [user, setUser] = useState({});
   const { token } = useContext(AuthContext);
 
-  const history = useHistory()
-// --------------------- gsap ----------------------------
+  const history = useHistory();
+  // --------------------- gsap ----------------------------
   const timeline = new TimelineMax({ paused: true });
 
-  const header  = useRef(null)
-  const jumbo = useRef(null)
-  const buttonTl = useRef(null) 
-  const footer = useRef(null)
-  const svgContent = useRef(null)
-  const f = useRef(null)
-  const d = useRef(null)
-  const v = useRef(null)
+  const header = useRef(null);
+  const jumbo = useRef(null);
+  const buttonTl = useRef(null);
+  const footer = useRef(null);
+  const svgContent = useRef(null);
+  const f = useRef(null);
+  const d = useRef(null);
+  const v = useRef(null);
 
   // ----------------- nav nav -----------------------------
-
+  useEffect(() => {
+    var pImage = document.getElementsByClassName("herePlease");
+    new sp(pImage, {
+      scale: 1.4,
+      delay: 0.5,
+      // transition: "cubic-bezier(0,0,0,1)",
+    });
+  });
   // nav
-
-
 
   useEffect(() => {
     timeline
@@ -76,9 +82,8 @@ function IndexPage() {
     timeline.play();
   }, []);
 
-
   const changePage = (e, destination) => {
-    e.preventDefault()
+    e.preventDefault();
     timeline.reverse();
     const timelineDuration = timeline.duration() * 1000;
     setTimeout(() => {
@@ -92,12 +97,18 @@ function IndexPage() {
         {/* nav -------------------------------------------------------------- */}
         <Nav timeline={timeline} changePage={changePage} />
         {/* nav --------------------------------------------------------------------- */}
-        <div ref={jumbo}  className="jumbotron jumbotron-fluid">
+        <div ref={jumbo} className="jumbotron jumbotron-fluid">
           <div className="container-fluid">
             <h1 className="display-6">
-              <span ref={f} className="letter1">F </span>
-              <span ref={d} className="letter2">D </span>
-              <span ref={v} className="letter3">V </span>
+              <span ref={f} className="letter1">
+                F{" "}
+              </span>
+              <span ref={d} className="letter2">
+                D{" "}
+              </span>
+              <span ref={v} className="letter3">
+                V{" "}
+              </span>
             </h1>
             <p className="jumbo">
               A budgeting app that is actually&nbsp;&nbsp;
@@ -107,19 +118,21 @@ function IndexPage() {
               &nbsp;&nbsp;using&nbsp;<i className="fas fa-exclamation"></i>
             </p>
             <div ref={buttonTl}>
-            <hr className="hr1" />
-            <hr width="75%" className="hr2" />
-            <hr width="50%" className="hr3" />
-            {token ? (
-              <Link to="/budget" className="btn btn-lg button">
-                View Your Budget
-              </Link>
-            ) : (
-              <button onClick={e => changePage(e, '/login')} className="btn btn-lg button">
-                Log In Now
-              </button>
-              
-            )}
+              <hr className="hr1" />
+              <hr width="75%" className="hr2" />
+              <hr width="50%" className="hr3" />
+              {token ? (
+                <Link to="/budget" className="btn btn-lg button">
+                  View Your Budget
+                </Link>
+              ) : (
+                <button
+                  onClick={(e) => changePage(e, "/login")}
+                  className="btn btn-lg button"
+                >
+                  Log In Now
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -139,7 +152,12 @@ function IndexPage() {
             ></path>
           </svg>
           {/* here */}
-          <img  width="100%" src="https://i.imgur.com/ZXWWwvD.png" alt="" />
+          <img
+            className="herePlease"
+            width="70%"
+            src="https://i.imgur.com/ZXWWwvD.png"
+            alt="money"
+          />
           <p className="section-text">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates
             qui quam ullam! Rem et nisi numquam repellendus eius quo
@@ -157,8 +175,8 @@ function IndexPage() {
         </div>
       </div>
       <div ref={footer}>
-      <footer>FDV | You Deserve a Better Budget</footer>
-    </div>
+        <footer>FDV | You Deserve a Better Budget</footer>
+      </div>
     </>
   );
 }
