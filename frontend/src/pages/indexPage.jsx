@@ -48,17 +48,17 @@ function IndexPage() {
         y: 25,
         ease: Power1.easeInOut,
       })
-      .from(f.current, 0.7, {
+      .from(f.current, 0.4, {
         autoAlpha: 0,
         y: 25,
         ease: Power1.easeInOut,
       })
-      .from(d.current, 0.7, {
+      .from(d.current, 0.4, {
         autoAlpha: 0,
         y: 25,
         ease: Power1.easeInOut,
       })
-      .from(v.current, 0.7, {
+      .from(v.current, 0.4, {
         autoAlpha: 0,
         y: 25,
         ease: Power1.easeInOut,
