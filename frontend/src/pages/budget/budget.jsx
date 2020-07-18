@@ -38,6 +38,10 @@ function Budget() {
   const currentBalance = () => {
     return fetchedTrans.map((tran) => tran.amount).reduce((a, b) => a + b, 0);
   };
+
+  const lastTenTrans = () => {
+    return fetchedTrans.slice(0, 10).map(tran => Math.abs(tran.amount)).reduce((a,b) => a + b, 0)
+  }
   const lookAtData = () => {
      console.log(fetchedTrans)
   }
@@ -46,6 +50,15 @@ function Budget() {
       return {value: tran.amount, date: tran.date.split(',')[0] }
     });
   };
+
+  const dataForDonut = () => {
+    return fetchedTrans.slice(0,10).map(trans => {
+      const total = lastTenTrans()
+      const absAmount = Math.abs(trans.amount)
+      const percent = absAmount/total.toFixed(1)/50 
+      return {quantity: percent, name: `${trans.name}, $${trans.amount}`}
+    })
+  } 
 
 
   // all the transaction state/setStates
@@ -179,14 +192,22 @@ function Budget() {
               {fetchedTrans && console.log([dataForSparkle()], [dataForSparkle()][0].length)}
               {fetchedTrans && lookAtData()}
               { ([dataForSparkle()][0].length) ?
-                <ResponsiveSparkline
-                  data={[dataForSparkle()][0]}
-                  isAnimated={true}
-                  duration={2000}
-                  height={height*2/3}
-                  width={width/2}
-                  areaGradient={white}
-                  lineGradient={white}
+                // <ResponsiveSparkline
+                //   data={[dataForSparkle()][0]}
+                //   isAnimated={true}
+                //   duration={2000}
+                //   height={height*1/3}
+                //   width={width/2}
+                //   areaGradient={white}
+                //   lineGradient={white}
+                // />
+                <ResponsiveDonut
+                
+                data={dataForDonut()}
+                height={height}
+                width={height}
+                externalRadius={height/3}
+                internalRadius={height/10}
                 />
                 :
                 <ResponsiveLine data={null} shouldShowLoadingState={true} />
