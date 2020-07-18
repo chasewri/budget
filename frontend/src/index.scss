@@ -35,6 +35,15 @@ $pink-third: #F3CCD9;
     font-size: 1.3rem;
 }
 
+
+.displayNone {
+    display: none;
+}
+
+.display {
+    display: block;
+}
+
 .herePlease {
     // box-shadow: 3px 3px 5px 6px #ccc;
 }
@@ -48,6 +57,13 @@ footer {
     max-height: 10vh;
     left: 0;
     bottom: 0;
+}
+.button {
+    margin-top: 7vh;
+    padding: 1rem 2rem;
+    background-color: $pink-first;
+    color: $white;
+    border-radius: 2rem;
 }
 
 .navbar-brand {

@@ -1,0 +1,45 @@
+$background-blue: #2E3F5d;
+$pink-first: #E36091;
+$pink-second: #EB9DB8;
+$pink-third: #F3CCD9;
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+
+    .modal-main {
+        padding-top: 5rem;
+        position: fixed;
+        background: white;
+        width: 80%;
+        height: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+    }
+
+
+}
+
+.display-block {
+    display: block;
+}
+
+.display-none {
+    display: none;
+}
+
+.button {
+    // margin-top: 7vh;
+    // padding: 1rem 2rem;
+    // background-color: $pink-first;
+    // color: white;
+    // border-radius: 2rem;
+    margin-bottom: 5vh;
+}
