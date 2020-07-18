@@ -10,7 +10,7 @@ module.exports = {
       })
         .populate("user")
         .populate("category")
-        .sort("date");
+        .sort("-date");
       return transactions.map((transaction) => {
         return {
           ...transaction._doc,

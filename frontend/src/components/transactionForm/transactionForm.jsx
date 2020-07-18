@@ -1,4 +1,5 @@
 import React from "react";
+import './transForm.scss'
 
 function TransactionForm({
   title,
@@ -16,7 +17,7 @@ function TransactionForm({
   cats,
 }) {
   return (
-    <>
+    <div className="transForm">
       <h3>{title}</h3>
 
       <form onSubmit={transSubmit}>
@@ -84,7 +85,7 @@ function TransactionForm({
           Submit Transaction
         </button>
       </form>
-    </>
+    </div>
   );
 }
 

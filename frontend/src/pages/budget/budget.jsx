@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import d3 from "d3";
 import Nav from "../../components/nav";
 import Footer from "../../components/footer/footer";
+import colors from 'britecharts/dist/umd/colors.min.js'
 
 import windowDimensions from "../../utils/windowDimensions";
 
@@ -16,6 +17,9 @@ import transactionCatcher from "../../utils/transactionCatcher";
 import AuthContext from "../../context/auth-context";
 import style from "./budgetPage.module.scss";
 
+
+import Modal from '../../components/modal/transactionModal'
+
 function Budget() {
   const ResponsiveDonut = withResponsiveness(Donut);
   const ResponsiveSparkline = withResponsiveness(Sparkline);
@@ -26,6 +30,10 @@ function Budget() {
   const { token } = useContext(AuthContext);
 
   const { height, width } = windowDimensions();
+
+
+  const [addTransaction, setAddTransaction] = useState(false)
+  const [addCategory, setAddCategory] = useState(false)
 
   const currentBalance = () => {
     return fetchedTrans.map((tran) => tran.amount).reduce((a, b) => a + b, 0);
@@ -78,35 +86,86 @@ function Budget() {
     e.preventDefault();
     makeCats(catCatcher, token, setCats, name, setName);
   };
-  // ------------d3----------------
-  // const d3Data = [10, 15, 20, 25, 50];
-  // const doc = d3.select("#doc");
-  // const svg = doc.append("svg").attr("width", 800).attr("height", 400);
-  // const colors = d3.scale.category10();
-  // const circles = svg.selectAll("circle").data(data).enter().append("circle").attr('cx', function(d, i) )
 
-  // ------------------------------------------
+
+    // -----------------------------------modal
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    // ---------------------------------
+    const greenBlue = ['#2E3F5d', '#2E3F5d']
+    const white = ['#FFF', '#FFF']
+
+// -----------------------return -------------------------------------------
   return (
     <>
       <Nav />
       <div className={style.main}>
-        <div className="container">
-          <div className="row">
-            <div className="col-4">
+        <div className="container-fluid">
+          <div className="row align-items-center justify-content-center">
+            <div className="col-sm-4">
               <p> {!fetchedTrans && "loading.."} </p>
               <h3
                 className="balance"
                 style={{
-                  color: fetchedTrans && currentBalance() > 0 ? "black" : "red",
+                  color: fetchedTrans && currentBalance() >= 0 ? "black" : "red",
                 }}
               >
-                {fetchedTrans && currentBalance()}
+                Current Balance: ${fetchedTrans && currentBalance().toFixed(2)}
               </h3>
+
+              <table className="table table-striped">
+                <thead>
+                  <tr>
+                  <th scope="col">Transaction</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {!fetchedTrans && 
+                    <tr>
+                      <td>Loading...</td>
+                    </tr>
+                  }
+                  {fetchedTrans && fetchedTrans.slice(0,10).map(trans => (
+                    <tr key={trans._id}>
+                        <td style={{textTransform: 'capitalize', fontSize: '1.25rem'}}>{trans.name}</td>
+                        <td style={{color: trans.amount > 0 ? 'black' : 'red'}}>${trans.amount.toFixed(2)}</td>
+                        <td>{trans.date.split(',')[0]}</td>
+                    </tr>
+                  ))
+                   
+                  }
+                </tbody>
+              </table>
+
             </div>
-            <div id="doc" className="col-8">
+            <div className='col-sm-1'></div>
+            <div id="doc" className="col-sm-7">
+
+              <Modal show={show} handleClose={handleClose} >
+              <TransactionForm
+        title="Add Transactions"
+        transSubmit={transSubmit}
+        transName={transName}
+        setTransName={setTransName}
+        description={description}
+        setDescription={setDescription}
+        amount={amount}
+        setAmount={setAmount}
+        date={date}
+        setDate={setDate}
+        selectCat={selectCat}
+        setSelectCat={setSelectCat}
+        cats={cats}
+      />
+
+              </Modal>
               <h3>
-                {" "}
-                width: {width} ~ height: {height}
+            
+                Recent Transactions
               </h3>
 
             
@@ -124,7 +183,10 @@ function Budget() {
                   data={[dataForSparkle()][0]}
                   isAnimated={true}
                   duration={2000}
-                  height={height*4/5}
+                  height={height*2/3}
+                  width={width/2}
+                  areaGradient={white}
+                  lineGradient={white}
                 />
                 :
                 <ResponsiveLine data={null} shouldShowLoadingState={true} />
@@ -132,7 +194,15 @@ function Budget() {
             </div>
           </div>
         </div>
+        <Footer>
+        <button onClick={handleShow} className="button btn btn-lg btn-light">Add Transaction</button>
+        <button style={{marginLeft: '5rem'}} onClick={handleShow} className="button btn btn-lg btn-light">Add Category</button>
+          
+        </Footer>
       </div>
+
+      
+
     </>
   );
 }

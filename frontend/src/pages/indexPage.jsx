@@ -7,6 +7,9 @@ import Footer from "../components/footer/footer";
 
 import AuthContext from "../context/auth-context";
 
+import Modal from '../components/modal/transactionModal'
+import TransactionModal from "../components/modal/transactionModal";
+
 function IndexPage() {
   const [user, setUser] = useState({});
   const { token } = useContext(AuthContext);
@@ -24,16 +27,7 @@ function IndexPage() {
   const d = useRef(null);
   const v = useRef(null);
 
-  // ----------------- nav nav -----------------------------
-  useEffect(() => {
-    var pImage = document.getElementsByClassName("herePlease");
-    new sp(pImage, {
-      scale: 1.4,
-      delay: 0.5,
-      // transition: "cubic-bezier(0,0,0,1)",
-    });
-  });
-  // nav
+
 
   useEffect(() => {
     timeline
@@ -90,15 +84,23 @@ function IndexPage() {
       history.push(destination);
     }, timelineDuration);
   };
+  // -----------------------------------modal
+  const [show, setShow] = useState(true);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  // ---------------------------------
 
   return (
     <>
+      
       <div ref={header} className="index">
         {/* nav -------------------------------------------------------------- */}
         <Nav timeline={timeline} changePage={changePage} />
         {/* nav --------------------------------------------------------------------- */}
         <div ref={jumbo} className="jumbotron jumbotron-fluid">
           <div className="container-fluid">
+         
             <h1 className="display-6">
               <span ref={f} className="letter1">
                 F{" "}
@@ -110,6 +112,20 @@ function IndexPage() {
                 V{" "}
               </span>
             </h1>
+
+            <Modal show={show} handleClose={handleClose}>
+            <h3>Jesus fucking christ!!</h3>
+            <h3>Jesus fucking christ!!</h3>
+            <h3>Jesus fucking christ!!</h3>
+            <h3>Jesus fucking christ!!</h3>
+            <h3>Jesus fucking christ!!</h3>
+            <h3>Jesus fucking christ!!</h3>
+
+
+            </Modal>
+      
+        
+   
             <p className="jumbo">
               A budgeting app that is actually&nbsp;&nbsp;
               <span className="letter2">
