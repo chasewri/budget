@@ -9,9 +9,6 @@ function Placeholder() {
         name={name}
         title="Add Catagories Here"
       />
-
-
-
       
 
       {/* <h3>Categories are here???</h3>
