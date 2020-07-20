@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npm install && node server.js",
-    "build": "cd fronted && npm run build",
-    "install": "cd frontend && npm install",
-    "heroku-postbuild": "npm run install && npm run build"
+    "start": "node server.js",
+    "local": "nodemon server.js",
+    "heroku-build": "cd frontend && npm run build",
+    "heroku-install": "cd frontend && npm install",
+    "herou-postbuild": "npm run heroku-install && npm run heroku-build"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
