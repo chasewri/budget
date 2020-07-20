@@ -1,21 +1,18 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { TimelineMax, Power1 } from "gsap/all";
-import { gsap } from 'gsap'
-import { CSSPlugin } from 'gsap/CSSPlugin'
+import { TimelineMax, Power1, TweenLite, Linear } from "gsap/all";
+import { gsap } from "gsap";
+import { CSSPlugin } from "gsap/CSSPlugin";
+import ScrollMagic from "scrollmagic";
+import { ScrollMagicPluginGsap } from "scrollmagic-plugin-gsap";
 
-import sp from "simple-parallax-js";
 import Nav from "../components/nav";
-import Footer from "../components/footer/footer";
 
 import AuthContext from "../context/auth-context";
 
-import Modal from '../components/modal/transactionModal'
-import TransactionModal from "../components/modal/transactionModal";
-
 function IndexPage() {
-  
-  gsap.registerPlugin(CSSPlugin)
+  gsap.registerPlugin(CSSPlugin);
+  ScrollMagicPluginGsap(ScrollMagic, TweenLite, TimelineMax);
 
   const [user, setUser] = useState({});
   const { token } = useContext(AuthContext);
@@ -33,8 +30,34 @@ function IndexPage() {
   const d = useRef(null);
   const v = useRef(null);
 
+  // other effect
+  //  --------- zoom in with scrollmagic
 
+  useEffect(() => {
+    TweenLite.defaultEase = Linear.easeNone;
+    const controller = new ScrollMagic.Controller();
+    const tl = new TimelineMax();
 
+    tl.staggerFrom(".content", 0.5, {
+      scale: 0,
+      cycle: {
+        y: [-50, 50],
+      },
+      stagger: {
+        from: "center",
+        amount: 0.5,
+      },
+    });
+
+    new ScrollMagic.Scene({
+      triggerElement: ".local-wave1",
+      duration: "50%",
+      triggerHook: 0.5,
+    })
+      .setTween(tl)
+      .addTo(controller);
+  }, []);
+  // ---------------------------
 
   useEffect(() => {
     timeline
@@ -100,14 +123,12 @@ function IndexPage() {
 
   return (
     <>
-      
       <div ref={header} className="index">
         {/* nav -------------------------------------------------------------- */}
         <Nav timeline={timeline} changePage={changePage} />
         {/* nav --------------------------------------------------------------------- */}
         <div ref={jumbo} className="jumbotron jumbotron-fluid">
           <div className="container-fluid">
-         
             <h1 className="display-6">
               <span ref={f} className="letter1">
                 F{" "}
@@ -125,9 +146,7 @@ function IndexPage() {
 
 
             </Modal> */}
-      
-        
-   
+
             <p className="jumbo">
               A budgeting app that is actually&nbsp;&nbsp;
               <span className="letter2">
@@ -170,18 +189,20 @@ function IndexPage() {
             ></path>
           </svg>
           {/* here */}
-          <img
-            className="herePlease"
-            width="70%"
-            src="https://i.imgur.com/ZXWWwvD.png"
-            alt="money"
-          />
-          <p className="section-text">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates
-            qui quam ullam! Rem et nisi numquam repellendus eius quo
-            voluptatibus similique soluta vel, praesentium labore, esse in.
-            Dolore, molestias porro!
-          </p>
+          <div id="scene">
+            <img
+              className="content"
+              width="70%"
+              src="https://i.imgur.com/ZXWWwvD.png"
+              alt="money"
+            />
+            <p className="section-text content">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Voluptates qui quam ullam! Rem et nisi numquam repellendus eius
+              quo voluptatibus similique soluta vel, praesentium labore, esse
+              in. Dolore, molestias porro!
+            </p>
+          </div>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
             <path
               fill="#FFF"
