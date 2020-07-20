@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npm run server.js",
-    "doit": "nodemon server.js"
+    "start": "node server.js",
+    "install": "cd frontend && npm install",
+    "heroku-postbuild": "npm run install && npm run build"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
