@@ -7,7 +7,7 @@
     "local": "nodemon server.js",
     "heroku-build": "cd frontend && npm run build",
     "heroku-install": "cd frontend && npm install",
-    "herou-postbuild": "npm run heroku-install && npm run heroku-build"
+    "heroku-postbuild": "npm run heroku-install && npm run heroku-build"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
