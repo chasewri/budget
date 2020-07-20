@@ -1,6 +1,9 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { TimelineMax, Power1 } from "gsap/all";
+import { gsap } from 'gsap'
+import { CSSPlugin } from 'gsap/CSSPlugin'
+
 import sp from "simple-parallax-js";
 import Nav from "../components/nav";
 import Footer from "../components/footer/footer";
@@ -11,12 +14,8 @@ import Modal from '../components/modal/transactionModal'
 import TransactionModal from "../components/modal/transactionModal";
 
 function IndexPage() {
-  // console.log('gsap globals', window.com.greensock)
-  console.log('gsap timelinemax', TimelineMax)
-  console.log('gsap power1', Power1)
-
-
-
+  
+  gsap.registerPlugin(CSSPlugin)
 
   const [user, setUser] = useState({});
   const { token } = useContext(AuthContext);
@@ -121,11 +120,11 @@ function IndexPage() {
               </span>
             </h1>
 
-            <Modal show={show} handleClose={handleClose}>
+            {/* <Modal show={show} handleClose={handleClose}>
           
 
 
-            </Modal>
+            </Modal> */}
       
         
    
