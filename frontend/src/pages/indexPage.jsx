@@ -11,6 +11,13 @@ import Modal from '../components/modal/transactionModal'
 import TransactionModal from "../components/modal/transactionModal";
 
 function IndexPage() {
+  console.log('gsap globals', window.com.greensock)
+  console.log('gsap timelinemax', TimelineMax)
+  console.log('gsap power1', Power1)
+
+
+
+
   const [user, setUser] = useState({});
   const { token } = useContext(AuthContext);
 
@@ -26,6 +33,7 @@ function IndexPage() {
   const f = useRef(null);
   const d = useRef(null);
   const v = useRef(null);
+
 
 
 
