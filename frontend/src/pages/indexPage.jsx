@@ -11,7 +11,7 @@ import Modal from '../components/modal/transactionModal'
 import TransactionModal from "../components/modal/transactionModal";
 
 function IndexPage() {
-  console.log('gsap globals', window.com.greensock)
+  // console.log('gsap globals', window.com.greensock)
   console.log('gsap timelinemax', TimelineMax)
   console.log('gsap power1', Power1)
 
