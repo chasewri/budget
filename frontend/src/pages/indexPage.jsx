@@ -34,7 +34,7 @@ function IndexPage() {
   //  --------- zoom in with scrollmagic
 
   useEffect(() => {
-    gsap.registerPlugin()
+    // gsap.registerPlugin()
     TweenLite.defaultEase = Linear.easeNone;
     const controller = new ScrollMagic.Controller();
     const tl = new TimelineMax();
