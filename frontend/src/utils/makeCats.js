@@ -16,7 +16,7 @@ export default function makeCats(catCatcher, token, setCats, name, setName) {
       `
     };
 
-    fetch("http://localhost:3001/api", {
+    fetch("/api", {
       method: "POST",
       body: JSON.stringify(queryBody),
       headers: {

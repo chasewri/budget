@@ -1,6 +1,9 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { TimelineMax, Power1 } from "gsap/all";
+import { gsap } from 'gsap'
+import { CSSPlugin } from 'gsap/CSSPlugin'
+
 import sp from "simple-parallax-js";
 import Nav from "../components/nav";
 import Footer from "../components/footer/footer";
@@ -11,6 +14,9 @@ import Modal from '../components/modal/transactionModal'
 import TransactionModal from "../components/modal/transactionModal";
 
 function IndexPage() {
+  
+  gsap.registerPlugin(CSSPlugin)
+
   const [user, setUser] = useState({});
   const { token } = useContext(AuthContext);
 
@@ -26,6 +32,7 @@ function IndexPage() {
   const f = useRef(null);
   const d = useRef(null);
   const v = useRef(null);
+
 
 
 
@@ -113,16 +120,11 @@ function IndexPage() {
               </span>
             </h1>
 
-            <Modal show={show} handleClose={handleClose}>
-            <h3>Jesus fucking christ!!</h3>
-            <h3>Jesus fucking christ!!</h3>
-            <h3>Jesus fucking christ!!</h3>
-            <h3>Jesus fucking christ!!</h3>
-            <h3>Jesus fucking christ!!</h3>
-            <h3>Jesus fucking christ!!</h3>
+            {/* <Modal show={show} handleClose={handleClose}>
+          
 
 
-            </Modal>
+            </Modal> */}
       
         
    
