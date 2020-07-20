@@ -98,7 +98,7 @@ function SignUp() {
       };
     }
 
-    fetch("http://localhost:3001/api", {
+    fetch("/api", {
       method: "POST",
       body: JSON.stringify(graphBody),
       headers: {

@@ -16,7 +16,7 @@ export default function transactionCatcher(token, setFetchedTrans) {
           }
         `,
       };
-      fetch("http://localhost:3001/api", {
+      fetch("/api", {
         method: "POST",
         body: JSON.stringify(queryBody),
         headers: {
