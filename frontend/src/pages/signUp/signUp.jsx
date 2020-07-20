@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-
-
 import { TimelineMax, Power1 } from "gsap/all";
 
 import Nav from "../../components/nav";
 import Footer from "../../components/footer/footer";
 import styles from "./signUp.module.scss";
 import AuthContext from "../../context/auth-context";
+import { Tween } from "gsap/gsap-core";
 
 function SignUp() {
   const { login, logout, token, userId } = useContext(AuthContext);
@@ -21,10 +20,10 @@ function SignUp() {
   // ---------------- gsap -----------------------
   const thisTl = new TimelineMax({ paused: true });
 
-  const wholePage  = useRef(null)
-  const footer = useRef(null)
-  const formTl = useRef(null)
-  const bigDiv = useRef(null)
+  const wholePage = useRef(null);
+  const footer = useRef(null);
+  const formTl = useRef(null);
+  const bigDiv = useRef(null);
 
   useEffect(() => {
     thisTl
@@ -49,16 +48,9 @@ function SignUp() {
         y: 25,
         ease: Power1.easeInOut,
       });
- 
 
     thisTl.play();
-  },[]);
-
-
-
-
-
-
+  }, []);
 
   // --------------gsap ---------------------------
 
@@ -114,11 +106,11 @@ function SignUp() {
       .then((resData) => {
         console.log(resData);
         login(resData.data.login);
-        if (currentPath === '/signup') {
-          history.push('/login')
-          setPassword('')
-          setEmail('')
-          return
+        if (currentPath === "/signup") {
+          history.push("/login");
+          setPassword("");
+          setEmail("");
+          return;
         }
         history.push("/budget");
       })
@@ -127,16 +119,12 @@ function SignUp() {
       });
   };
 
-
-
-
-
   return (
     <>
       <Nav />
       <div ref={wholePage} className={styles.main}>
-        <div ref={bigDiv}  className="container">
-          <h1 >
+        <div ref={bigDiv} className="container">
+          <h1>
             {currentPath === "/signup"
               ? "Sign Up for FDV"
               : "Welcome Back, Please Log In!"}
@@ -170,17 +158,17 @@ function SignUp() {
           </form>
         </div>
         <div ref={footer}>
-        <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-          <path
-            fill="#FFF"
-            fillOpacity="1"
-            d="M0,96L48,101.3C96,107,192,117,288,154.7C384,192,480,256,576,277.3C672,299,768,277,864,245.3C960,213,1056,171,1152,154.7C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-          ></path>
-        </svg>
-        <div >
-      <footer>FDV | You Deserve a Better Budget</footer>
-    </div>
-    </div>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path
+              fill="#FFF"
+              fillOpacity="1"
+              d="M0,96L48,101.3C96,107,192,117,288,154.7C384,192,480,256,576,277.3C672,299,768,277,864,245.3C960,213,1056,171,1152,154.7C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+            ></path>
+          </svg>
+          <div>
+            <footer>FDV | You Deserve a Better Budget</footer>
+          </div>
+        </div>
       </div>
     </>
   );

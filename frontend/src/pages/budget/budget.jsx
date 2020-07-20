@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import d3 from "d3";
 import Nav from "../../components/nav";
 import Footer from "../../components/footer/footer";
-import colors from 'britecharts/dist/umd/colors.min.js'
+import colors from "britecharts/dist/umd/colors.min.js";
 
 import windowDimensions from "../../utils/windowDimensions";
 
@@ -17,8 +17,7 @@ import transactionCatcher from "../../utils/transactionCatcher";
 import AuthContext from "../../context/auth-context";
 import style from "./budgetPage.module.scss";
 
-
-import Modal from '../../components/modal/transactionModal'
+import Modal from "../../components/modal/transactionModal";
 
 function Budget() {
   const ResponsiveDonut = withResponsiveness(Donut);
@@ -31,35 +30,36 @@ function Budget() {
 
   const { height, width } = windowDimensions();
 
-
-  const [addTransaction, setAddTransaction] = useState(false)
-  const [addCategory, setAddCategory] = useState(false)
+  const [addTransaction, setAddTransaction] = useState(false);
+  const [addCategory, setAddCategory] = useState(false);
 
   const currentBalance = () => {
     return fetchedTrans.map((tran) => tran.amount).reduce((a, b) => a + b, 0);
   };
 
   const lastTenTrans = () => {
-    return fetchedTrans.slice(0, 10).map(tran => Math.abs(tran.amount)).reduce((a,b) => a + b, 0)
-  }
+    return fetchedTrans
+      .slice(0, 10)
+      .map((tran) => Math.abs(tran.amount))
+      .reduce((a, b) => a + b, 0);
+  };
   const lookAtData = () => {
-     console.log(fetchedTrans)
-  }
+    console.log(fetchedTrans);
+  };
   const dataForSparkle = () => {
     return fetchedTrans.map((tran) => {
-      return {value: tran.amount, date: tran.date.split(',')[0] }
+      return { value: tran.amount, date: tran.date.split(",")[0] };
     });
   };
 
   const dataForDonut = () => {
-    return fetchedTrans.slice(0,10).map(trans => {
-      const total = lastTenTrans()
-      const absAmount = Math.abs(trans.amount)
-      const percent = absAmount/total.toFixed(1)/50 
-      return {quantity: percent, name: `${trans.name}, $${trans.amount}`}
-    })
-  } 
-
+    return fetchedTrans.slice(0, 10).map((trans) => {
+      const total = lastTenTrans();
+      const absAmount = Math.abs(trans.amount);
+      const percent = absAmount / total.toFixed(1) / 50;
+      return { quantity: percent, name: `${trans.name}, $${trans.amount}` };
+    });
+  };
 
   // all the transaction state/setStates
   const [transName, setTransName] = useState("");
@@ -80,6 +80,26 @@ function Budget() {
     catCatcher(token, setCats);
   }, [token]);
 
+  // -----------------------------------modal
+  // ---- add transaction modal
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  // ---------------------------------
+  // ----- add catagory modal
+  const [catShow, setCatShow] = useState(false)
+  const handleCatClose = () => setCatShow(false);
+  const handleCatShow = () => setCatShow(true);
+
+
+
+
+  // ------------------------------------
+  // doghnut color schemes 
+  const greenBlue = ["#2E3F5d", "#2E3F5d"];
+  const white = ["#FFF", "#FFF"];
+
   const transSubmit = (e) => {
     e.preventDefault();
     // console.log(transName, description, amount, date, selectCat);
@@ -93,6 +113,11 @@ function Budget() {
       transactionCatcher,
       setFetchedTrans
     );
+    setTransName("");
+    setDescription("");
+    setAmount("");
+    setDate("");
+    setShow(!show);
   };
 
   const handleSubmit = (e) => {
@@ -100,17 +125,7 @@ function Budget() {
     makeCats(catCatcher, token, setCats, name, setName);
   };
 
-
-    // -----------------------------------modal
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    // ---------------------------------
-    const greenBlue = ['#2E3F5d', '#2E3F5d']
-    const white = ['#FFF', '#FFF']
-
-// -----------------------return -------------------------------------------
+  // -----------------------return -------------------------------------------
   return (
     <>
       <Nav />
@@ -122,7 +137,8 @@ function Budget() {
               <h3
                 className="balance"
                 style={{
-                  color: fetchedTrans && currentBalance() >= 0 ? "black" : "red",
+                  color:
+                    fetchedTrans && currentBalance() >= 0 ? "black" : "red",
                 }}
               >
                 Current Balance: ${fetchedTrans && currentBalance().toFixed(2)}
@@ -131,67 +147,77 @@ function Budget() {
               <table className="table table-striped">
                 <thead>
                   <tr>
-                  <th scope="col">Transaction</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Date</th>
+                    <th scope="col">Transaction</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Date</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {!fetchedTrans && 
+                  {!fetchedTrans && (
                     <tr>
                       <td>Loading...</td>
                     </tr>
-                  }
-                  {fetchedTrans && fetchedTrans.slice(0,10).map(trans => (
-                    <tr key={trans._id}>
-                        <td style={{textTransform: 'capitalize', fontSize: '1.25rem'}}>{trans.name}</td>
-                        <td style={{color: trans.amount > 0 ? 'black' : 'red'}}>${trans.amount.toFixed(2)}</td>
-                        <td>{trans.date.split(',')[0]}</td>
-                    </tr>
-                  ))
-                   
-                  }
+                  )}
+                  {fetchedTrans &&
+                    fetchedTrans.slice(0, 10).map((trans) => (
+                      <tr key={trans._id}>
+                        <td
+                          style={{
+                            textTransform: "capitalize",
+                            fontSize: "1.25rem",
+                          }}
+                        >
+                          {trans.name}
+                        </td>
+                        <td
+                          style={{ color: trans.amount > 0 ? "black" : "red" }}
+                        >
+                          ${trans.amount.toFixed(2)}
+                        </td>
+                        <td>{trans.date.split(",")[0]}</td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
-
             </div>
-            <div className='col-sm-1'></div>
+            <div className="col-sm-1"></div>
             <div id="doc" className="col-sm-7">
+              <Modal show={show} handleClose={handleClose}>
+                <TransactionForm
+                  title="Add Transactions"
+                  transSubmit={transSubmit}
+                  transName={transName}
+                  setTransName={setTransName}
+                  description={description}
+                  setDescription={setDescription}
+                  amount={amount}
+                  setAmount={setAmount}
+                  date={date}
+                  setDate={setDate}
+                  selectCat={selectCat}
+                  setSelectCat={setSelectCat}
+                  cats={cats}
+                  handleClose={handleClose}
+                />
+              </Modal>
 
-              <Modal show={show} handleClose={handleClose} >
-              <TransactionForm
-        title="Add Transactions"
-        transSubmit={transSubmit}
-        transName={transName}
-        setTransName={setTransName}
-        description={description}
-        setDescription={setDescription}
-        amount={amount}
-        setAmount={setAmount}
-        date={date}
-        setDate={setDate}
-        selectCat={selectCat}
-        setSelectCat={setSelectCat}
-        cats={cats}
-      />
+              <Modal show={catShow} handleClose={handleCatClose}>
+
+                <h3>Testing!!</h3>
 
               </Modal>
-              <h3>
-            
-                Recent Transactions
-              </h3>
+              <h3>Recent Transactions</h3>
 
-            
               {/* <ResponsiveDonut 
                       data={[]}
                       shouldShowLoadingState={true}
                     
                     />  */}
 
-
-              {fetchedTrans && console.log([dataForSparkle()], [dataForSparkle()][0].length)}
+              {fetchedTrans &&
+                console.log([dataForSparkle()], [dataForSparkle()][0].length)}
               {fetchedTrans && lookAtData()}
-              { ([dataForSparkle()][0].length) ?
+              {[dataForSparkle()][0].length ? (
                 // <ResponsiveSparkline
                 //   data={[dataForSparkle()][0]}
                 //   isAnimated={true}
@@ -202,28 +228,35 @@ function Budget() {
                 //   lineGradient={white}
                 // />
                 <ResponsiveDonut
-                
-                data={dataForDonut()}
-                height={height}
-                width={height}
-                externalRadius={height/3}
-                internalRadius={height/10}
+                  data={dataForDonut()}
+                  height={height}
+                  width={height}
+                  externalRadius={height / 3}
+                  internalRadius={height / 10}
                 />
-                :
+              ) : (
+                // <ResponsiveLine
+
+                //   data={dataForSparkle()}
+                // />
                 <ResponsiveLine data={null} shouldShowLoadingState={true} />
-              }
+              )}
             </div>
           </div>
         </div>
         <Footer>
-        <button onClick={handleShow} className="button btn btn-lg btn-light">Add Transaction</button>
-        <button style={{marginLeft: '5rem'}} onClick={handleShow} className="button btn btn-lg btn-light">Add Category</button>
-          
+          <button onClick={handleShow} className="button btn btn-lg btn-light">
+            Add Transaction
+          </button>
+          <button
+            style={{ marginLeft: "5rem" }}
+            onClick={handleCatShow}
+            className="button btn btn-lg btn-light"
+          >
+            Add Category
+          </button>
         </Footer>
       </div>
-
-      
-
     </>
   );
 }
