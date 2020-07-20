@@ -1,5 +1,5 @@
 import React from "react";
-import './transForm.scss'
+import "./transForm.scss";
 
 function TransactionForm({
   title,
