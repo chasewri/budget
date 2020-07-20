@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
+import ScrollMagic from "scrollmagic";
 import { TimelineMax, Power1, TweenLite, Linear } from "gsap/all";
 import { gsap } from "gsap";
 import { CSSPlugin } from "gsap/CSSPlugin";
-import ScrollMagic from "scrollmagic";
 import { ScrollMagicPluginGsap } from "scrollmagic-plugin-gsap";
 
 import Nav from "../components/nav";
@@ -11,8 +11,8 @@ import Nav from "../components/nav";
 import AuthContext from "../context/auth-context";
 
 function IndexPage() {
+  ScrollMagicPluginGsap(ScrollMagic,TweenLite, TimelineMax);
   gsap.registerPlugin(CSSPlugin);
-  ScrollMagicPluginGsap(ScrollMagic, TweenLite, TimelineMax);
 
   const [user, setUser] = useState({});
   const { token } = useContext(AuthContext);
@@ -34,6 +34,7 @@ function IndexPage() {
   //  --------- zoom in with scrollmagic
 
   useEffect(() => {
+    gsap.registerPlugin()
     TweenLite.defaultEase = Linear.easeNone;
     const controller = new ScrollMagic.Controller();
     const tl = new TimelineMax();
@@ -51,7 +52,7 @@ function IndexPage() {
 
     new ScrollMagic.Scene({
       triggerElement: ".local-wave1",
-      duration: "50%",
+      duration: "90%",
       triggerHook: 0.5,
     })
       .setTween(tl)
