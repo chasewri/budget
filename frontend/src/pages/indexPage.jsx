@@ -114,12 +114,7 @@ function IndexPage() {
             </h1>
 
             <Modal show={show} handleClose={handleClose}>
-            <h3>Jesus fucking christ!!</h3>
-            <h3>Jesus fucking christ!!</h3>
-            <h3>Jesus fucking christ!!</h3>
-            <h3>Jesus fucking christ!!</h3>
-            <h3>Jesus fucking christ!!</h3>
-            <h3>Jesus fucking christ!!</h3>
+          
 
 
             </Modal>
