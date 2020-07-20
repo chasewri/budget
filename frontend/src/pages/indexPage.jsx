@@ -7,17 +7,14 @@ import { CSSPlugin } from "gsap/CSSPlugin";
 import { ScrollMagicPluginGsap } from "scrollmagic-plugin-gsap";
 
 import Nav from "../components/nav";
-
 import AuthContext from "../context/auth-context";
 
 function IndexPage() {
   ScrollMagicPluginGsap(ScrollMagic,TweenLite, TimelineMax);
   gsap.registerPlugin(CSSPlugin);
-
-  const [user, setUser] = useState({});
   const { token } = useContext(AuthContext);
-
   const history = useHistory();
+
   // --------------------- gsap ----------------------------
   const timeline = new TimelineMax({ paused: true });
 
@@ -31,7 +28,7 @@ function IndexPage() {
   const v = useRef(null);
 
   // other effect
-  //  --------- zoom in with scrollmagic
+  //  --------- zoom in with scrollmagic -----------------------
 
   useEffect(() => {
     // gsap.registerPlugin()
@@ -51,7 +48,7 @@ function IndexPage() {
     });
 
     new ScrollMagic.Scene({
-      triggerElement: ".local-wave1",
+      triggerElement: "#scene",
       duration: "90%",
       triggerHook: 0.5,
     })
@@ -59,7 +56,7 @@ function IndexPage() {
       .addTo(controller);
   }, []);
   // ---------------------------
-
+// fade in gsap -------------------------------------------------
   useEffect(() => {
     timeline
       .from(header.current, 0.8, {
@@ -115,12 +112,6 @@ function IndexPage() {
       history.push(destination);
     }, timelineDuration);
   };
-  // -----------------------------------modal
-  const [show, setShow] = useState(true);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  // ---------------------------------
 
   return (
     <>
@@ -128,6 +119,7 @@ function IndexPage() {
         {/* nav -------------------------------------------------------------- */}
         <Nav timeline={timeline} changePage={changePage} />
         {/* nav --------------------------------------------------------------------- */}
+        {/* jumbotron ------------------------------------------------------- */}
         <div ref={jumbo} className="jumbotron jumbotron-fluid">
           <div className="container-fluid">
             <h1 className="display-6">
@@ -141,12 +133,6 @@ function IndexPage() {
                 V{" "}
               </span>
             </h1>
-
-            {/* <Modal show={show} handleClose={handleClose}>
-          
-
-
-            </Modal> */}
 
             <p className="jumbo">
               A budgeting app that is actually&nbsp;&nbsp;
@@ -174,14 +160,10 @@ function IndexPage() {
             </div>
           </div>
         </div>
+
+        {/* jumbotron end -------------------------------------------- */}
         <div ref={svgContent} className="local-wave1">
-          {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-          <path
-            fill="#F7F7F9"
-            fillOpacity="1"
-            d="M0,96L48,106.7C96,117,192,139,288,122.7C384,107,480,53,576,74.7C672,96,768,192,864,213.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-          ></path>
-        </svg> */}
+
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
             <path
               fill="#F7F7F9"
@@ -190,10 +172,11 @@ function IndexPage() {
             ></path>
           </svg>
           {/* here */}
-          <div id="scene">
+          {/* content div --------------------------------------------------- */}
+          <div className="container" id="scene">
             <img
               className="content"
-              width="70%"
+              width="100%"
               src="https://i.imgur.com/ZXWWwvD.png"
               alt="money"
             />
@@ -204,6 +187,8 @@ function IndexPage() {
               in. Dolore, molestias porro!
             </p>
           </div>
+          {/* end content div -------------------------------------------- */}
+          {/* footer --------------------------------------------------- */}
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
             <path
               fill="#FFF"
@@ -211,7 +196,6 @@ function IndexPage() {
               d="M0,96L48,101.3C96,107,192,117,288,154.7C384,192,480,256,576,277.3C672,299,768,277,864,245.3C960,213,1056,171,1152,154.7C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
             ></path>
           </svg>
-          {/* <svg className="second-white-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#FFF" fill-opacity="1" d="M0,256L48,240C96,224,192,192,288,170.7C384,149,480,139,576,165.3C672,192,768,256,864,250.7C960,245,1056,171,1152,144C1248,117,1344,139,1392,149.3L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg> */}
         </div>
       </div>
       <div ref={footer}>
