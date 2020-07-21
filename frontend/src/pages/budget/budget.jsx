@@ -37,8 +37,8 @@ function Budget() {
 
   const { height, width } = windowDimensions();
 
-  const [addTransaction, setAddTransaction] = useState(false);
-  const [addCategory, setAddCategory] = useState(false);
+  // const [addTransaction, setAddTransaction] = useState(false);
+  // const [addCategory, setAddCategory] = useState(false);
 
   const currentBalance = () => {
     return fetchedTrans.map((tran) => tran.amount).reduce((a, b) => a + b, 0);
