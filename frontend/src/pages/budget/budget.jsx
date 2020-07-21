@@ -25,8 +25,7 @@ import style from "./budgetPage.module.scss";
 
 import Modal from "../../components/modal/transactionModal";
 
-import RiseLoader from '@bit/davidhu2000.react-spinners.rise-loader';
-
+import RiseLoader from "@bit/davidhu2000.react-spinners.rise-loader";
 
 function Budget() {
   const ResponsiveDonut = withResponsiveness(Donut);
@@ -55,17 +54,16 @@ function Budget() {
     console.log(fetchedTrans);
   };
   const negativeTrans = () => {
-    return fetchedTrans.filter(tran => tran.amount < 0)
-  }
+    return fetchedTrans.filter((tran) => tran.amount < 0);
+  };
   const dataForBar = () => {
-    return negativeTrans()
-      .map((tran) => {
-        return {
-          name: tran.category.name,
-          stack: tran.date.split(",")[0],
-          value: Math.abs(tran.amount),
-        };
-      });
+    return negativeTrans().map((tran) => {
+      return {
+        name: tran.category.name,
+        stack: tran.date.split(",")[0],
+        value: Math.abs(tran.amount),
+      };
+    });
   };
   const dataForSparkle = () => {
     return fetchedTrans.map((tran) => {
@@ -220,7 +218,6 @@ function Budget() {
         <div className="container-fluid">
           <div className="row align-items-center justify-content-center">
             <div className="col-sm-4">
-     
               <h3
                 className="balance"
                 style={{
@@ -241,13 +238,8 @@ function Budget() {
                   </tr>
                 </thead>
                 <tbody>
-              {!fetchedTrans && <RiseLoader
-                                  size='50'
-                                  color='#E36091'
-              
-              /> }
+                  {!fetchedTrans && <RiseLoader size="50" color="#E36091" />}
 
-                    
                   {fetchedTrans &&
                     fetchedTrans.slice(0, 10).map((trans) => (
                       <tr key={trans._id}>
@@ -280,7 +272,7 @@ function Budget() {
             </div>
             <div className="col-sm-1"></div>
             <div id="doc" className="col-sm-7">
-                        <h3>{barDisplay ? 'Last 10 Transactions' : 'All Expenses'}</h3>
+              <h3>{barDisplay ? "Last 10 Transactions" : "All Expenses"}</h3>
 
               {/* {fetchedTrans &&
                 console.log([dataForSparkle()], [dataForSparkle()][0].length)} */}
@@ -296,11 +288,14 @@ function Budget() {
                 //   lineGradient={white}
                 // />
                 <div>
-                  <div className="container" style={barDisplay ? showChart : hideChart}>
+                  <div
+                    className="container"
+                    style={barDisplay ? showChart : hideChart}
+                  >
                     <ResponsiveDonut
                       data={dataForDonut()}
-                      height={height/1.5}
-                      width={width/2.5}
+                      height={height / 1.5}
+                      width={width / 2.5}
                       externalRadius={height / 3}
                       internalRadius={height / 10}
                     />
