@@ -25,6 +25,9 @@ import style from "./budgetPage.module.scss";
 
 import Modal from "../../components/modal/transactionModal";
 
+import RiseLoader from '@bit/davidhu2000.react-spinners.rise-loader';
+
+
 function Budget() {
   const ResponsiveDonut = withResponsiveness(Donut);
   const ResponsiveSparkline = withResponsiveness(Sparkline);
@@ -217,7 +220,7 @@ function Budget() {
         <div className="container-fluid">
           <div className="row align-items-center justify-content-center">
             <div className="col-sm-4">
-              <p> {!fetchedTrans && "loading.."} </p>
+     
               <h3
                 className="balance"
                 style={{
@@ -238,11 +241,13 @@ function Budget() {
                   </tr>
                 </thead>
                 <tbody>
-                  {!fetchedTrans && (
-                    <tr>
-                      <td>Loading...</td>
-                    </tr>
-                  )}
+              {!fetchedTrans && <RiseLoader
+                                  size='50'
+                                  color='#E36091'
+              
+              /> }
+
+                    
                   {fetchedTrans &&
                     fetchedTrans.slice(0, 10).map((trans) => (
                       <tr key={trans._id}>
