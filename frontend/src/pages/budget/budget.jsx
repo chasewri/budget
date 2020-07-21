@@ -291,11 +291,11 @@ function Budget() {
                 //   lineGradient={white}
                 // />
                 <div>
-                  <div style={barDisplay ? showChart : hideChart}>
+                  <div className="container" style={barDisplay ? showChart : hideChart}>
                     <ResponsiveDonut
                       data={dataForDonut()}
-                      height={height}
-                      width={height}
+                      height={height/1.5}
+                      width={width/2.5}
                       externalRadius={height / 3}
                       internalRadius={height / 10}
                     />
