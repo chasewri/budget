@@ -58,6 +58,8 @@ module.exports = buildSchema(`
         createUser(userInput: UserInput): User
         createCategory(categoryInput: CategoryInput): Category
         createTransaction(transactionInput: TransactionInput): Transaction!
+        deleteTransaction(_id: ID!): Transaction
+        deleteCategory(_id: ID!): Category
     }
 
     schema {

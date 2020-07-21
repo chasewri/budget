@@ -1,12 +1,8 @@
 import React from 'react'
 
-function CategoryForm({title, handleSubmit, setName, name}) {
+function CategoryForm({ handleSubmit, setName, name}) {
     return (
         <>
-
-
-
-<h2>{title}</h2>
 
 <form onSubmit={handleSubmit}>
   <h3>Create a category</h3>
@@ -21,7 +17,7 @@ function CategoryForm({title, handleSubmit, setName, name}) {
     />
   </div>
 
-  <button type="submit" className="btn btn-lg btn-light">
+  <button type="submit" className="btn btn-lg btn-light button">
     Create Cateogry
   </button>
 </form>

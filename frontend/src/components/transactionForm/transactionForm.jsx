@@ -81,7 +81,7 @@ function TransactionForm({
           </select>
         </div>
 
-        <button className="btn btn-lg btn-light" type="submit">
+        <button className="btn btn-lg btn-light button" type="submit">
           Submit Transaction
         </button>
       </form>
