@@ -7,7 +7,6 @@ const rootResolver = {
     ...authResolver,
     ...categoryResolver,
     ...transactionResolver
-
 }
 
 module.exports = rootResolver

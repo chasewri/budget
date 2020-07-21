@@ -1,4 +1,4 @@
-export default function makeCats(catCatcher, token, setCats, name, setName) {
+export default function makeCats(catCatcher, token, setCats, name, setName, handleCatClose) {
     console.log(name);
 
     if (name.trim().length === 0) {
@@ -30,7 +30,7 @@ export default function makeCats(catCatcher, token, setCats, name, setName) {
         console.log(resData);
         setName('')
         catCatcher(token, setCats)
-        
+        handleCatClose()
       })
       .catch((err) => {
         console.log(err);

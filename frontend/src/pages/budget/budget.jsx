@@ -6,7 +6,13 @@ import colors from "britecharts/dist/umd/colors.min.js";
 
 import windowDimensions from "../../utils/windowDimensions";
 
-import { Donut, withResponsiveness, Sparkline, Line } from "britecharts-react";
+import {
+  Donut,
+  withResponsiveness,
+  Sparkline,
+  GroupedBar,
+  StackedBar,
+} from "britecharts-react";
 
 import submitTransactions from "../../utils/submitTransactions";
 import CategoryForm from "../../components/categoryForm/categoryForm";
@@ -22,7 +28,6 @@ import Modal from "../../components/modal/transactionModal";
 function Budget() {
   const ResponsiveDonut = withResponsiveness(Donut);
   const ResponsiveSparkline = withResponsiveness(Sparkline);
-  const ResponsiveLine = withResponsiveness(Line);
 
   const [cats, setCats] = useState([]);
   const [name, setName] = useState("");
@@ -45,6 +50,19 @@ function Budget() {
   };
   const lookAtData = () => {
     console.log(fetchedTrans);
+  };
+  const negativeTrans = () => {
+    return fetchedTrans.filter(tran => tran.amount < 0)
+  }
+  const dataForBar = () => {
+    return negativeTrans()
+      .map((tran) => {
+        return {
+          name: tran.category.name,
+          stack: tran.date.split(",")[0],
+          value: Math.abs(tran.amount),
+        };
+      });
   };
   const dataForSparkle = () => {
     return fetchedTrans.map((tran) => {
@@ -78,7 +96,7 @@ function Budget() {
 
   useEffect(() => {
     catCatcher(token, setCats);
-  }, [token]);
+  }, []);
 
   // -----------------------------------modal
   // ---- add transaction modal
@@ -88,17 +106,27 @@ function Budget() {
   const handleShow = () => setShow(true);
   // ---------------------------------
   // ----- add catagory modal
-  const [catShow, setCatShow] = useState(false)
+  const [catShow, setCatShow] = useState(false);
   const handleCatClose = () => setCatShow(false);
   const handleCatShow = () => setCatShow(true);
 
-
-
-
   // ------------------------------------
-  // doghnut color schemes 
+  // doghnut color schemes
   const greenBlue = ["#2E3F5d", "#2E3F5d"];
   const white = ["#FFF", "#FFF"];
+
+  const [barDisplay, setBarDisplay] = useState(false);
+
+  const chartDisplay = () => {
+    setBarDisplay(!barDisplay);
+  };
+
+  const showChart = {
+    display: "block",
+  };
+  const hideChart = {
+    display: "none",
+  };
 
   const transSubmit = (e) => {
     e.preventDefault();
@@ -122,9 +150,65 @@ function Budget() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    makeCats(catCatcher, token, setCats, name, setName);
+    makeCats(catCatcher, token, setCats, name, setName, handleCatClose);
   };
+  // ------------------------------------ del transaction
+  function deleteTransaction(id) {
+    console.log(id);
+    const delId = id;
+    const queryBody = {
+      query: `
+        mutation {
+          deleteTransaction(_id: "${delId}") {
+                name
+            }
+        }
+      `,
+    };
 
+    fetch("/api", {
+      method: "POST",
+      body: JSON.stringify(queryBody),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        transactionCatcher(token, setFetchedTrans);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  // --------------- del category --------------------------------------
+  function deleteCategory(id) {
+    console.log(id);
+    const delId = id;
+    const queryBody = {
+      query: `
+      mutation {
+        deleteCategory(_id: "${delId}") {
+          name
+        }
+      }
+    `,
+    };
+    fetch("/api", {
+      method: "POST",
+      body: JSON.stringify(queryBody),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        catCatcher(token, setCats);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   // -----------------------return -------------------------------------------
   return (
     <>
@@ -150,6 +234,7 @@ function Budget() {
                     <th scope="col">Transaction</th>
                     <th scope="col">Amount</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -175,6 +260,14 @@ function Budget() {
                           ${trans.amount.toFixed(2)}
                         </td>
                         <td>{trans.date.split(",")[0]}</td>
+                        <td>
+                          <button
+                            onClick={() => deleteTransaction(trans._id)}
+                            className="btn btn-sm btn-warning"
+                          >
+                            <i className="fa fa-trash" aria-hidden="true"></i>
+                          </button>
+                        </td>
                       </tr>
                     ))}
                 </tbody>
@@ -182,44 +275,14 @@ function Budget() {
             </div>
             <div className="col-sm-1"></div>
             <div id="doc" className="col-sm-7">
-              <Modal show={show} handleClose={handleClose}>
-                <TransactionForm
-                  title="Add Transactions"
-                  transSubmit={transSubmit}
-                  transName={transName}
-                  setTransName={setTransName}
-                  description={description}
-                  setDescription={setDescription}
-                  amount={amount}
-                  setAmount={setAmount}
-                  date={date}
-                  setDate={setDate}
-                  selectCat={selectCat}
-                  setSelectCat={setSelectCat}
-                  cats={cats}
-                  handleClose={handleClose}
-                />
-              </Modal>
-
-              <Modal show={catShow} handleClose={handleCatClose}>
-
-                <h3>Testing!!</h3>
-
-              </Modal>
               <h3>Recent Transactions</h3>
 
-              {/* <ResponsiveDonut 
-                      data={[]}
-                      shouldShowLoadingState={true}
-                    
-                    />  */}
-
-              {fetchedTrans &&
-                console.log([dataForSparkle()], [dataForSparkle()][0].length)}
+              {/* {fetchedTrans &&
+                console.log([dataForSparkle()], [dataForSparkle()][0].length)} */}
               {fetchedTrans && lookAtData()}
-              {[dataForSparkle()][0].length ? (
+              {dataForDonut().length ? (
                 // <ResponsiveSparkline
-                //   data={[dataForSparkle()][0]}
+                //   data={dataForSparkle()}
                 //   isAnimated={true}
                 //   duration={2000}
                 //   height={height*1/3}
@@ -227,22 +290,92 @@ function Budget() {
                 //   areaGradient={white}
                 //   lineGradient={white}
                 // />
-                <ResponsiveDonut
-                  data={dataForDonut()}
-                  height={height}
-                  width={height}
-                  externalRadius={height / 3}
-                  internalRadius={height / 10}
-                />
-              ) : (
-                // <ResponsiveLine
+                <div>
+                  <div style={barDisplay ? showChart : hideChart}>
+                    <ResponsiveDonut
+                      data={dataForDonut()}
+                      height={height}
+                      width={height}
+                      externalRadius={height / 3}
+                      internalRadius={height / 10}
+                    />
+                  </div>
 
-                //   data={dataForSparkle()}
-                // />
-                <ResponsiveLine data={null} shouldShowLoadingState={true} />
+                  <div style={barDisplay ? hideChart : showChart}>
+                    <StackedBar
+                      data={dataForBar()}
+                      isHorizontal={true}
+                      width={width / 2.5}
+                      height={height / 1.5}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <GroupedBar
+                  data={null}
+                  isHorizontal={true}
+                  shouldShowLoadingState={true}
+                />
               )}
             </div>
           </div>
+          {/* modal ------------------------------------- */}
+          <Modal show={show} handleClose={handleClose}>
+            <TransactionForm
+              title="Add Transactions"
+              transSubmit={transSubmit}
+              transName={transName}
+              setTransName={setTransName}
+              description={description}
+              setDescription={setDescription}
+              amount={amount}
+              setAmount={setAmount}
+              date={date}
+              setDate={setDate}
+              selectCat={selectCat}
+              setSelectCat={setSelectCat}
+              cats={cats}
+              handleClose={handleClose}
+            />
+          </Modal>
+
+          <Modal
+            show={catShow}
+            handleClose={handleCatClose}
+            deleteCategory={deleteCategory}
+          >
+            <CategoryForm
+              handleSubmit={handleSubmit}
+              setName={setName}
+              name={name}
+              handleCatClose={handleCatClose}
+            />
+            <h3>Current Categories:</h3>
+            <table className="table table-striped catTable">
+              <thead>
+                <tr>
+                  <th scope="col">Category</th>
+                  <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cats.map((cat) => (
+                  <tr key={cat._id}>
+                    <td>{cat.name}</td>
+                    <td>
+                      <button
+                        onClick={() => deleteCategory(cat._id)}
+                        className="btn btn-sm btn-warning"
+                      >
+                        <i className="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Modal>
+          {/* modals ---------------------------------------------------- */}
         </div>
         <Footer>
           <button onClick={handleShow} className="button btn btn-lg btn-light">
@@ -254,6 +387,13 @@ function Budget() {
             className="button btn btn-lg btn-light"
           >
             Add Category
+          </button>
+          <button
+            style={{ marginLeft: "5rem" }}
+            onClick={chartDisplay}
+            className="button btn btn-lg btn-light"
+          >
+            {barDisplay ? "Bar Chart" : "Donut Chart"}
           </button>
         </Footer>
       </div>

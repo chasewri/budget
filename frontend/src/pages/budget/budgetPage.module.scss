@@ -14,47 +14,71 @@ $pink-third: #F3CCD9;
     fill: white;
 
     color: white;
- 
+
     h1 {
         color: white;
         padding-top: 5rem;
     }
+    
+  
+        text {
+            fill: white;
+            margin-top: 3rem;
+        }
+ 
+
     h3 {
         margin-top: 10rem;
         background-color: white;
         border-radius: 1.2rem;
     }
+
     div {
         margin-top: 5 vh;
     }
+
     form {
         padding-top: 5rem;
     }
+
     label {
         margin-top: 3vh;
         font-size: 1.7rem;
     }
+
     input {
         font-size: 1.5rem;
     }
-    button {
-        margin-top: 3vh;
+
+    .button {
+        // margin-top: 3vh;
         background-color: $pink-first;
         color: white;
         border-radius: .9rem;
         padding: 1rem 3rem;
+
         &:hover {
             background-color: white;
         }
     }
+
     .balance {
         margin-top: 10rem;
         background-color: white;
         border-radius: 1.2rem;
         text-align: center;
     }
+
     table {
         background-color: white;
+    }
+
+    .catList {
+        margin-top: 1rem;
+        color: black;
+    }
+    p {
+        color: black;
     }
 
 }
@@ -65,4 +89,3 @@ $pink-third: #F3CCD9;
 .formActions {
     align-items: center;
 }
-

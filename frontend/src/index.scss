@@ -35,19 +35,17 @@ $pink-third: #F3CCD9;
     font-size: 1.3rem;
 }
 
-
-.displayNone {
-    display: none;
+select.form-control {
+    font-size: 1.75rem;
 }
-
-.display {
-    display: block;
+input[type="date"].form-control {
+    width: 100%;
+    // font-size: 3rem;
+    // text-align: center;
+    &:active {
+        width: 100%;
+    }
 }
-
-.herePlease {
-    // box-shadow: 3px 3px 5px 6px #ccc;
-}
-
 footer {
     text-align: center;
     padding-top: 5rem;
@@ -57,7 +55,9 @@ footer {
     max-height: 10vh;
     left: 0;
     bottom: 0;
+    font-size: 2rem;
 }
+
 .button {
     margin-top: 7vh;
     padding: 1rem 2rem;
@@ -98,6 +98,9 @@ footer {
     img {
         margin-top: -3vh;
     }
+    p.content {
+        font-size: 2rem;
+    }
 
 
     h1 {
@@ -112,16 +115,17 @@ footer {
         margin-top: 0;
 
         p.jumbo {
-            margin-top: 4vh;
-            font-size: 1.3rem;
+            margin-top: 6vh;
+            font-size: 2rem;
             color: $background-blue
         }
 
         .button {
-            margin-top: 7vh;
-            padding: 1rem 2rem;
+            margin-top: 12vh;
+            padding: 1.5rem 3rem;
             background-color: $pink-first;
             color: $white;
+            font-size: 1.25rem;
             border-radius: 2rem;
         }
 

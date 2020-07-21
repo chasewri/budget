@@ -8,7 +8,7 @@ module.exports = {
       const categories = await Category.find({
         user: args.userId,
         // user: args.
-      }).populate('user');
+      }).populate("user");
       return categories.map((category) => {
         return {
           ...category._doc,
@@ -46,6 +46,16 @@ module.exports = {
     } catch (err) {
       console.log(err);
       throw err;
+    }
+  },
+  deleteCategory: async (args) => {
+    try {
+      const delCategory = await Category.findByIdAndRemove({
+        _id: args._id,
+      });
+      res.status(200).json(delCategory);
+    } catch (err) {
+      res.status(500).json(err);
     }
   },
 };

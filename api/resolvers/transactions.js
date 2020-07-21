@@ -6,7 +6,6 @@ module.exports = {
     try {
       const transactions = await Transaction.find({
         user: args.userId,
-        // user: args.user
       })
         .populate("user")
         .populate("category")
@@ -29,9 +28,7 @@ module.exports = {
       description: args.transactionInput.description,
       amount: +(args.transactionInput.amount * 100),
       date: new Date(args.transactionInput.date).toLocaleString(),
-      //   category: "5f106f94ed21be267e921cd1",
       category: args.transactionInput.category,
-      //   user: "5f0ff107a407664fee80ae05",
       user: args.transactionInput.user,
     });
     let createdTransaction;
@@ -43,7 +40,16 @@ module.exports = {
       return createdTransaction;
     } catch (err) {
       console.log(err);
-      throw err;
+    }
+  },
+  deleteTransaction: async (args, req) => {
+    try {
+      const delTransaction = await Transaction.findOneAndRemove({
+        _id: args._id
+      });
+      res.status(200).json(delTransaction)
+    } catch (err) {
+      res.status(500).json(err)
     }
   },
 };
