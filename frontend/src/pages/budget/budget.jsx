@@ -275,7 +275,7 @@ function Budget() {
             </div>
             <div className="col-sm-1"></div>
             <div id="doc" className="col-sm-7">
-              <h3>Recent Transactions</h3>
+                        <h3>{barDisplay ? 'Last 10 Transactions' : 'All Expenses'}</h3>
 
               {/* {fetchedTrans &&
                 console.log([dataForSparkle()], [dataForSparkle()][0].length)} */}
