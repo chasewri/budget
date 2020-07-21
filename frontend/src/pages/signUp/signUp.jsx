@@ -63,7 +63,9 @@ function SignUp() {
     const submitEmail = email.toLowerCase();
 
     if (email.trim().length === 0 || password.trim().length === 0) {
-      return;
+      setWarningMessage('Please enter an email and password')
+      setDisplayAlert(true)
+      return
     }
 
     let graphBody = {
@@ -99,12 +101,11 @@ function SignUp() {
     })
       .then((res) => {
         if (res.status !== 200 && res.status !== 201) {
-          throw new Error("Sign Up Failed!");
+          throw new Error("Input did not work with the system");
         }
         return res.json();
       })
       .then((resData) => {
-        console.log(resData);
         login(resData.data.login);
         if (currentPath === "/signup") {
           history.push("/login");
@@ -115,9 +116,24 @@ function SignUp() {
         history.push("/budget");
       })
       .catch((err) => {
+        setWarningMessage(`${err}`)
+        setDisplayAlert(true)
         console.log(err);
       });
   };
+  // alert -------------------------------------------------------
+  const [warningMessage, setWarningMessage] = useState('')
+  const [displayAlert, setDisplayAlert] = useState(false)
+  const showAlert = {
+    display: 'block',
+    backgroundColor: 'gray',
+    color: 'white',
+    borderRadius: '1rem'
+  }
+  const hideAlert = {
+    display: 'none'
+  }
+  // ------------------------ alert end
 
   return (
     <>
@@ -130,6 +146,9 @@ function SignUp() {
               : "Welcome Back, Please Log In!"}
           </h1>
           <form ref={formTl} onSubmit={handleSubmit}>
+            <div style={!displayAlert ? hideAlert : showAlert} className="alert alert-error" role="alert">
+              <strong>Error!</strong> {warningMessage}
+            </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input

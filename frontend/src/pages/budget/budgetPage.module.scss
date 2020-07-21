@@ -7,7 +7,7 @@ $pink-third: #F3CCD9;
 .main {
     text-align: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 50vh;
     background: rgb(235, 157, 184);
     background: linear-gradient(0deg, rgba(235, 157, 184, 1) 12%, rgba(45, 59, 93, 1) 43%);
     // fill: $pink-first;
@@ -48,6 +48,7 @@ $pink-third: #F3CCD9;
 
     input {
         font-size: 1.5rem;
+
     }
 
     .button {
