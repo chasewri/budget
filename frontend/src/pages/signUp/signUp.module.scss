@@ -10,35 +10,49 @@ $pink-third: #F3CCD9;
     min-height: 50vh;
     background: rgb(235, 157, 184);
     background: linear-gradient(0deg, rgba(235, 157, 184, 1) 12%, rgba(45, 59, 93, 1) 43%);
+    color: red;
 
-    color: white;
- 
     h1 {
         color: white;
         padding-top: 5rem;
     }
+
     div {
         margin-top: 5 vh;
     }
+
     form {
         padding-top: 5rem;
     }
+
     label {
         margin-top: 3vh;
         font-size: 1.7rem;
+        color: white;
     }
+
     input {
         font-size: 1.5rem;
     }
+
     button {
         margin-top: 3vh;
         background-color: $pink-first;
         color: white;
         border-radius: .9rem;
         padding: 1rem 3rem;
+
         &:hover {
             background-color: white;
         }
+    }
+
+    div.alert,
+    div.alert-error {
+        font-size: 1rem;
+        background-color: white;
+        color: red;
+        margin: 1rem;
     }
 
 }
@@ -47,4 +61,3 @@ $pink-third: #F3CCD9;
 .formActions {
     align-items: center;
 }
-
