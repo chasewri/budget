@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import d3 from "d3";
 import Nav from "../../components/nav";
 import Footer from "../../components/footer/footer";
-import colors from "britecharts/dist/umd/colors.min.js";
+// import colors from "britecharts/dist/umd/colors.min.js";
 
 import windowDimensions from "../../utils/windowDimensions";
 
