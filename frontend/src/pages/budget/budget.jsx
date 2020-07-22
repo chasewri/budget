@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import Nav from "../../components/nav";
 import Footer from "../../components/footer/footer";
-// import colors from "britecharts/dist/umd/colors.min.js";
 
 import windowDimensions from "../../utils/windowDimensions";
 
@@ -24,10 +23,8 @@ import style from "./budgetPage.module.scss";
 
 import Modal from "../../components/modal/transactionModal";
 
-
 function Budget() {
   const ResponsiveDonut = withResponsiveness(Donut);
-  const ResponsiveSparkline = withResponsiveness(Sparkline);
 
   const [cats, setCats] = useState([]);
   const [name, setName] = useState("");
@@ -63,9 +60,14 @@ function Budget() {
       };
     });
   };
-  const dataForSparkle = () => {
+
+  const dataForDiff = () => {
     return fetchedTrans.map((tran) => {
-      return { value: tran.amount, date: tran.date.split(",")[0] };
+      return {
+        name: tran.amount > 0 ? "Income" : "Expenses",
+        stack: tran.date.split(",")[0],
+        value: Math.abs(tran.amount),
+      };
     });
   };
 
@@ -269,49 +271,43 @@ function Budget() {
             <div className="col-sm-1"></div>
             <div id="doc" className="col-sm-7">
               <h3>{barDisplay ? "Last 10 Transactions" : "All Expenses"}</h3>
+              <div>
+                <div
+                  className="container"
+                  style={barDisplay ? showChart : hideChart}
+                >
+                  <ResponsiveDonut
+                    data={dataForDonut()}
+                    height={height / 1.5}
+                    width={width / 2.5}
+                    externalRadius={height / 3}
+                    internalRadius={height / 10}
+                  />
+                </div>
 
-              {/* {fetchedTrans &&
-                console.log([dataForSparkle()], [dataForSparkle()][0].length)} */}
-              {fetchedTrans && lookAtData()}
-              {dataForDonut().length ? (
-                // <ResponsiveSparkline
-                //   data={dataForSparkle()}
-                //   isAnimated={true}
-                //   duration={2000}
-                //   height={height*1/3}
-                //   width={width/2}
-                //   areaGradient={white}
-                //   lineGradient={white}
-                // />
-                <div>
-                  <div
-                    className="container"
-                    style={barDisplay ? showChart : hideChart}
-                  >
-                    <ResponsiveDonut
-                      data={dataForDonut()}
-                      height={height / 1.5}
-                      width={width / 2.5}
-                      externalRadius={height / 3}
-                      internalRadius={height / 10}
-                    />
-                  </div>
-
-                  <div style={barDisplay ? hideChart : showChart}>
+                <div style={barDisplay ? hideChart : showChart}>
+                  <StackedBar
+                    data={dataForBar()}
+                    isHorizontal={true}
+                    width={width / 2.5}
+                    height={height / 1.5}
+                  />
+                </div>
+                {/* <div style={barDisplay ? hideChart : showChart}>
                     <StackedBar
-                      data={dataForBar()}
+                      data={dataForDiff()}
                       isHorizontal={true}
                       width={width / 2.5}
                       height={height / 1.5}
                     />
-                  </div>
-                </div>
+                  </div> */}
+              </div>
               ) : (
-                <GroupedBar
-                  data={null}
-                  isHorizontal={true}
-                  shouldShowLoadingState={true}
-                />
+              <GroupedBar
+                data={null}
+                isHorizontal={true}
+                shouldShowLoadingState={true}
+              />
               )}
             </div>
           </div>
@@ -391,6 +387,13 @@ function Budget() {
           >
             {barDisplay ? "Bar Chart" : "Donut Chart"}
           </button>
+          {/* <button
+            style={{ marginLeft: "5rem" }}
+            onClick={chartDisplay}
+            className="button btn btn-lg btn-light"
+          >
+            Exp/Inc
+          </button> */}
         </Footer>
       </div>
     </>

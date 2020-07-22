@@ -28,8 +28,6 @@ select.form-control {
 input[type="date"].form-control {
     width: 100%;
 
-    // font-size: 3rem;
-    // text-align: center;
     &:active {
         width: 100%;
     }
@@ -116,8 +114,6 @@ footer {
             font-size: calc(.6rem + .6vw);
             border-radius: 2rem;
         }
-
-        // background: url(./img/Cinemagraph.mp4);
     }
 
     .letter1 {
