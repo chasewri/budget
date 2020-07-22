@@ -1,7 +1,7 @@
 import React from "react";
-import style from './footer.module.scss'
+import style from "./footer.module.scss";
 
-function Footer({children}) {
+function Footer({ children }) {
   return (
     <div className={style.footer}>
       {children}

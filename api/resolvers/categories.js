@@ -1,7 +1,5 @@
 const Category = require("../../models/category");
 
-const { transformCategory } = require("./merge");
-
 module.exports = {
   categories: async (args, req) => {
     try {
@@ -36,11 +34,6 @@ module.exports = {
         ...result._doc,
         _id: result._doc._id.toString(),
       };
-      // const user = await User.findById({_id :'5f0ff107a407664fee80ae05'});
-
-      // if (!user) {
-      //   throw new Error("User is not found!");
-      // }
 
       return createdCategory;
     } catch (err) {

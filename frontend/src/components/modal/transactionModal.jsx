@@ -8,9 +8,6 @@ function TransactionModal({ show, handleClose, children }) {
     <>
       <div className={showHideClassName}>
         <section className="modal-main">
-
-
-
           {children}
           <button className="button btn btn-lg btn-light" onClick={handleClose}>
             Cancel
@@ -20,8 +17,5 @@ function TransactionModal({ show, handleClose, children }) {
     </>
   );
 }
-
-
-
 
 export default TransactionModal;

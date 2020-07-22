@@ -1,5 +1,4 @@
 const Transaction = require("../../models/transaction");
-const { datetoString } = require("../../helper/date");
 
 module.exports = {
   transactions: async (args, req) => {
@@ -45,11 +44,11 @@ module.exports = {
   deleteTransaction: async (args, req) => {
     try {
       const delTransaction = await Transaction.findOneAndRemove({
-        _id: args._id
+        _id: args._id,
       });
-      res.status(200).json(delTransaction)
+      res.status(200).json(delTransaction);
     } catch (err) {
-      res.status(500).json(err)
+      res.status(500).json(err);
     }
   },
 };
