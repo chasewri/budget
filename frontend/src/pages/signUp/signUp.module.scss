@@ -4,6 +4,8 @@ $pink-first: #E36091;
 $pink-second: #EB9DB8;
 $pink-third: #F3CCD9;
 
+$fontvar: calc(1rem + .7vw);
+
 
 .main {
     text-align: center;
@@ -15,6 +17,7 @@ $pink-third: #F3CCD9;
     h1 {
         color: white;
         padding-top: 5rem;
+        font-size: calc(1.4rem + 1vw);
     }
 
     div {
@@ -27,12 +30,12 @@ $pink-third: #F3CCD9;
 
     label {
         margin-top: 3vh;
-        font-size: 1.7rem;
+        font-size: calc(1rem + .7vw);
         color: white;
     }
 
     input {
-        font-size: 1.5rem;
+        font-size: $fontvar;
     }
 
     button {
@@ -41,6 +44,7 @@ $pink-third: #F3CCD9;
         color: white;
         border-radius: .9rem;
         padding: 1rem 3rem;
+        font-size: calc(.6rem + .6vw);
 
         &:hover {
             background-color: white;
