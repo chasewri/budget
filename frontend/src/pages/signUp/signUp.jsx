@@ -3,7 +3,6 @@ import { useLocation, useHistory } from "react-router-dom";
 import { TimelineMax, Power1 } from "gsap/all";
 
 import Nav from "../../components/nav";
-import Footer from "../../components/footer/footer";
 import styles from "./signUp.module.scss";
 import AuthContext from "../../context/auth-context";
 import { Tween } from "gsap/gsap-core";

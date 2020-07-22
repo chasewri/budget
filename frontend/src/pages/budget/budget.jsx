@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
-import d3 from "d3";
 import Nav from "../../components/nav";
 import Footer from "../../components/footer/footer";
-import colors from "britecharts/dist/umd/colors.min.js";
+// import colors from "britecharts/dist/umd/colors.min.js";
 
 import windowDimensions from "../../utils/windowDimensions";
 
@@ -25,7 +24,6 @@ import style from "./budgetPage.module.scss";
 
 import Modal from "../../components/modal/transactionModal";
 
-import RiseLoader from "@bit/davidhu2000.react-spinners.rise-loader";
 
 function Budget() {
   const ResponsiveDonut = withResponsiveness(Donut);
@@ -238,8 +236,6 @@ function Budget() {
                   </tr>
                 </thead>
                 <tbody>
-                  {!fetchedTrans && <RiseLoader size="50" color="#E36091" />}
-
                   {fetchedTrans &&
                     fetchedTrans.slice(0, 10).map((trans) => (
                       <tr key={trans._id}>
