@@ -71,6 +71,7 @@ function Budget() {
     });
   };
 
+
   const dataForDonut = () => {
     return fetchedTrans.slice(0, 10).map((trans) => {
       const total = lastTenTrans();
@@ -271,29 +272,30 @@ function Budget() {
             <div className="col-sm-1"></div>
             <div id="doc" className="col-sm-7">
               <h3>{barDisplay ? "Last 10 Transactions" : "All Expenses"}</h3>
-              <div>
-                <div
-                  className="container"
-                  style={barDisplay ? showChart : hideChart}
-                >
-                  <ResponsiveDonut
-                    data={dataForDonut()}
-                    height={height / 1.5}
-                    width={width / 2.5}
-                    externalRadius={height / 3}
-                    internalRadius={height / 10}
-                  />
-                </div>
+              {dataForDonut().length ? (
+                <div>
+                  <div
+                    className="container"
+                    style={barDisplay ? showChart : hideChart}
+                  >
+                    <ResponsiveDonut
+                      data={dataForDonut()}
+                      height={height / 1.5}
+                      width={width / 2.5}
+                      externalRadius={height / 3}
+                      internalRadius={height / 10}
+                    />
+                  </div>
 
-                <div style={barDisplay ? hideChart : showChart}>
-                  <StackedBar
-                    data={dataForBar()}
-                    isHorizontal={true}
-                    width={width / 2.5}
-                    height={height / 1.5}
-                  />
-                </div>
-                {/* <div style={barDisplay ? hideChart : showChart}>
+                  <div style={barDisplay ? hideChart : showChart}>
+                    <StackedBar
+                      data={dataForBar()}
+                      isHorizontal={true}
+                      width={width / 2.5}
+                      height={height / 1.5}
+                    />
+                  </div>
+                  {/* <div style={barDisplay ? hideChart : showChart}>
                     <StackedBar
                       data={dataForDiff()}
                       isHorizontal={true}
@@ -301,13 +303,13 @@ function Budget() {
                       height={height / 1.5}
                     />
                   </div> */}
-              </div>
+                </div>
               ) : (
-              <GroupedBar
-                data={null}
-                isHorizontal={true}
-                shouldShowLoadingState={true}
-              />
+                <GroupedBar
+                  data={null}
+                  isHorizontal={true}
+                  shouldShowLoadingState={true}
+                />
               )}
             </div>
           </div>
