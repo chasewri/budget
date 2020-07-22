@@ -7,7 +7,6 @@ import windowDimensions from "../../utils/windowDimensions";
 import {
   Donut,
   withResponsiveness,
-  Sparkline,
   GroupedBar,
   StackedBar,
 } from "britecharts-react";
