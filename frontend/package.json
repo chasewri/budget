@@ -10,7 +10,7 @@
     "britecharts-react": "^0.5.4",
     "d3-selection": "^1.4.1",
     "gsap": "^3.4.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
